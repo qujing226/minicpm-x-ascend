@@ -6,7 +6,7 @@
 
 ## Smoke test
 
-Smoke test 直接运行 PATH 中的 `llama-omni-cli`，加载 F16 LLM + audio 模型，关闭 TTS，并使用仓库内置 WAV 完成一次 prefill 与 decode：
+Smoke test 加载 F16 LLM + audio 模型，关闭 TTS，并使用仓库内置 WAV 完成一次 prefill 与 decode：
 
 ~~~bash
 ./scripts/smoke_test.sh
