@@ -73,7 +73,7 @@ NPM_REGISTRY="${NPM_REGISTRY:-https://registry.npmmirror.com}"
 npm config set registry "${NPM_REGISTRY}"
 
 log "安装 uv"
-python3 -m pip install \
+python -m pip install \
     --user \
     --upgrade \
     --index-url "${PYPI_INDEX}" \
