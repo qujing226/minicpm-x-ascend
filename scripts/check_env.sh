@@ -16,6 +16,9 @@ printf 'architecture: %s\n' "$(uname -m)"
 printf 'cmake:       %s\n' "$(cmake --version | head -n 1)"
 printf 'g++:         %s\n' "$(g++ --version | head -n 1)"
 printf 'CANN home:   %s\n' "${ASCEND_TOOLKIT_HOME}"
+printf 'CANN target: %s\n' "${CANN_REQUIRED_RELEASE}"
+printf 'CANN actual: %s\n' "${CANN_DETECTED_VERSION}"
+printf 'version file: %s\n' "${CANN_VERSION_FILE}"
 
 if [[ "$(uname -m)" != "aarch64" ]]; then
     printf 'WARNING: validated competition environment is aarch64\n' >&2
