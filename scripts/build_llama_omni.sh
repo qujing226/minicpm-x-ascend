@@ -7,7 +7,7 @@ source "${SCRIPT_DIR}/common.sh"
 require_command git
 
 (( $# == 0 )) || die "usage: $0"
-LLAMA_OMNI_REPO="https://github.com/tc-mb/llama.cpp-omni.git"
+LLAMA_OMNI_REPO="${LLAMA_OMNI_REPO:-git@github.com:qujing226/llama.cpp-omni.git}"
 
 if [[ -f "${LLAMA_CPP_DIR}/CMakeLists.txt" && -d "${LLAMA_CPP_DIR}/.git" ]]; then
     log "Source already exists; preserving local state"
@@ -35,11 +35,21 @@ log "Build configuration"
 printf 'source:       %s\n' "${LLAMA_CPP_DIR}"
 printf 'build:        %s\n' "${BUILD_DIR}"
 printf 'CANN home:    %s\n' "${ASCEND_TOOLKIT_HOME}"
+printf 'CANN release: %s (detected %s)\n' "${CANN_REQUIRED_RELEASE}" "${CANN_DETECTED_VERSION}"
+printf 'CANN version: %s\n' "${CANN_VERSION_FILE}"
 printf 'parallelism:  %s\n' "${BUILD_JOBS}"
 printf 'commit:       %s\n' "$(git -C "${LLAMA_CPP_DIR}" rev-parse --short HEAD)"
 
 if [[ -n "$(git -C "${LLAMA_CPP_DIR}" status --short)" ]]; then
     printf 'WARNING: source tree has local changes; they are preserved.\n' >&2
+fi
+
+BUILD_RELEASE_MARKER="${BUILD_DIR}/.minicpm-cann-release"
+if [[ -f "${BUILD_RELEASE_MARKER}" ]]; then
+    previous_release="$(<"${BUILD_RELEASE_MARKER}")"
+    if [[ "${previous_release}" != "${CANN_DETECTED_VERSION}" ]]; then
+        die "${BUILD_DIR} was configured for CANN ${previous_release}; choose an empty BUILD_DIR for ${CANN_DETECTED_VERSION}"
+    fi
 fi
 
 cmake \
@@ -48,6 +58,8 @@ cmake \
     -DCMAKE_BUILD_TYPE=Release \
     -DGGML_CANN=ON \
     -DLLAMA_OPENSSL=OFF
+
+printf '%s\n' "${CANN_DETECTED_VERSION}" >"${BUILD_RELEASE_MARKER}"
 
 cmake \
     --build "${BUILD_DIR}" \

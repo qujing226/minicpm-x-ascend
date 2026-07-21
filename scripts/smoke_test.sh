@@ -2,19 +2,27 @@
 set -Eeuo pipefail
 
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+# shellcheck source=scripts/common.sh
 source "${SCRIPT_DIR}/common.sh"
 
 require_command npu-smi
 load_cann_env
 
-command -v llama-omni-cli >/dev/null 2>&1 || {
-    die "llama-omni-cli not found in PATH; run build_llama_omni.sh and source ~/.bashrc"
+CLI_PATH="${LLAMA_CLI_BIN}"
+if [[ ! -x "${CLI_PATH}" ]]; then
+    CLI_PATH="$(command -v llama-omni-cli || true)"
+fi
+[[ -n "${CLI_PATH}" && -x "${CLI_PATH}" ]] || {
+    die "llama-omni-cli not found; run build_llama_omni.sh under CANN ${CANN_REQUIRED_RELEASE}"
 }
 
 SMOKE_TIMEOUT="${SMOKE_TIMEOUT:-600}"
-SMOKE_TEST_COUNT="${SMOKE_TEST_COUNT:-1}"
+SMOKE_TEST_COUNT="${SMOKE_TEST_COUNT:-2}"
 AUDIO_TEST_PREFIX="${AUDIO_TEST_PREFIX:-${LLAMA_CPP_DIR}/tools/omni/assets/test_case/audio_test_case/audio_test_case_}"
 started_pid=""
+
+ensure_state_dirs
+SMOKE_LOG="${SMOKE_LOG:-${LOG_DIR}/smoke_$(date -u +%Y%m%dT%H%M%SZ)_$$.log}"
 
 [[ "${SMOKE_TIMEOUT}" =~ ^[1-9][0-9]*$ ]] || die "SMOKE_TIMEOUT must be a positive integer"
 [[ "${SMOKE_TEST_COUNT}" =~ ^[1-9][0-9]*$ ]] || die "SMOKE_TEST_COUNT must be a positive integer"
@@ -42,13 +50,13 @@ trap 'exit 143' TERM
 
 log "Preflight"
 "${SCRIPT_DIR}/check_models.sh"
-cli_path="$(command -v llama-omni-cli)"
-printf 'CLI:          %s\n' "${cli_path}"
+printf 'CLI:          %s\n' "${CLI_PATH}"
+printf 'CANN:         %s (target %s)\n' "${CANN_DETECTED_VERSION}" "${CANN_REQUIRED_RELEASE}"
 printf 'model:        %s\n' "${MODEL_PATH}"
 printf 'audio prefix: %s\n' "${AUDIO_TEST_PREFIX}"
 printf 'test count:   %s\n' "${SMOKE_TEST_COUNT}"
 
-ldd "${cli_path}" | grep -q 'libggml-cann' || {
+ldd "${CLI_PATH}" | grep -q 'libggml-cann' || {
     die "llama-omni-cli is not linked with GGML CANN"
 }
 
@@ -69,8 +77,8 @@ cli_args=(
 )
 (
     cd "${LLAMA_CPP_DIR}"
-    exec llama-omni-cli "${cli_args[@]}"
-) &
+    exec "${CLI_PATH}" "${cli_args[@]}"
+) > >(tee "${SMOKE_LOG}") 2>&1 &
 started_pid=$!
 
 seen_on_npu=0
@@ -99,4 +107,5 @@ fi
     die "llama-omni-cli completed but was never visible in npu-smi"
 }
 
+printf 'Smoke log:    %s\n' "${SMOKE_LOG}"
 log "CLI smoke test passed"
