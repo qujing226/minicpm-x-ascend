@@ -33,6 +33,7 @@ esac
 
 NODE_FILE="node-v${NODE_VERSION}-linux-${NODE_ARCH}.tar.xz"
 NODE_DIR="/usr/local/lib/nodejs/node-v${NODE_VERSION}-linux-${NODE_ARCH}"
+NODE_BIN="${NODE_DIR}/bin"
 
 if [[ "$(node --version 2>/dev/null || true)" == "v${NODE_VERSION}" ]] && command -v npm >/dev/null 2>&1; then
     log "复用 Node.js v${NODE_VERSION}"
@@ -60,13 +61,16 @@ else
     ${SUDO} mkdir -p /usr/local/lib/nodejs
     ${SUDO} rm -rf "${NODE_DIR}"
     ${SUDO} tar -xJf "${tmp_dir}/${NODE_FILE}" -C /usr/local/lib/nodejs
-
-    for binary in node npm npx corepack; do
-        if [[ -x "${NODE_DIR}/bin/${binary}" ]]; then
-            ${SUDO} ln -sfn "${NODE_DIR}/bin/${binary}" "/usr/local/bin/${binary}"
-        fi
-    done
 fi
+
+# npm 全局安装的命令（包括 codex）会放在 Node 自身的 bin 目录中。
+# 无论 Node 是新安装还是复用，都修复常用软链接，并让当前脚本立即可用。
+for binary in node npm npx corepack; do
+    if [[ -x "${NODE_BIN}/${binary}" ]]; then
+        ${SUDO} ln -sfn "${NODE_BIN}/${binary}" "/usr/local/bin/${binary}"
+    fi
+done
+export PATH="${NODE_BIN}:${HOME}/.local/bin:/usr/local/bin:${PATH}"
 
 # Node 安装完成后立即配置 npm 国内 registry。
 NPM_REGISTRY="${NPM_REGISTRY:-https://registry.npmmirror.com}"
@@ -87,10 +91,9 @@ add_line() {
     grep -Fqx "${line}" "${PROFILE}" 2>/dev/null || printf '\n%s\n' "${line}" >>"${PROFILE}"
 }
 
-add_line 'export PATH="$HOME/.local/bin:/usr/local/bin:$PATH"'
+add_line "export PATH=\"${NODE_BIN}:\$HOME/.local/bin:/usr/local/bin:\$PATH\""
 add_line "export UV_DEFAULT_INDEX=\"${PYPI_INDEX}\""
 
-export PATH="${HOME}/.local/bin:/usr/local/bin:${PATH}"
 export UV_DEFAULT_INDEX="${PYPI_INDEX}"
 
 log "验证安装"
