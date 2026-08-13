@@ -1,0 +1,494 @@
+INFO 08-13 03:20:26 [__init__.py:52] Available plugins for group vllm.platform_plugins:
+INFO 08-13 03:20:26 [__init__.py:54] - ascend -> vllm_ascend:register
+INFO 08-13 03:20:26 [__init__.py:57] All plugins in this group will be loaded. Set `VLLM_PLUGINS` to control which plugins to load.
+INFO 08-13 03:20:26 [__init__.py:237] Platform plugin ascend is activated
+INFO 08-13 03:20:26 [platform.py:62] Breakable cudagraph is force disabled on Ascend because DeepSeek V4 PIECEWISE cudagraph is not supported yet.
+/workspace/user_data/vllm-omni/vllm_omni/version.py:55: RuntimeWarning: vLLM and vLLM-Omni appear to have mismatched major/minor versions:
+ --> vLLM-Omni version 0.25.0
+ --> vLLM version 0.1.dev1+ge5588e49b
+This will likely cause compatibility issues.
+  warn_if_misaligned_vllm_version()
+INFO 08-13 03:20:37 [patch.py:252] NVFP4 W4A4 weight_scale NaN-clamp: installed.
+INFO 08-13 03:20:37 [patch.py:481] [cumem-cuda] CuMemAllocator._python_free_callback patched: asleep guard extended to all platforms.
+INFO 08-13 03:20:46 [main.py:54] Delegating entrypoint handling to vllm-omni
+2026-08-13 03:20:46,575 - 376726 - ServiceProfiler - INFO - VLLM_USE_V1 not set, auto-detected via vLLM 0.1.dev1+ge5588e49b.empty: default 0
+INFO 08-13 03:20:46 [__init__.py:112] Registered model loader `<class 'vllm_ascend.model_loader.netloader.netloader.ModelNetLoaderElastic'>` with load format `netloader`
+INFO 08-13 03:20:46 [__init__.py:112] Registered model loader `<class 'vllm_ascend.model_loader.rfork.rfork_loader.RForkModelLoader'>` with load format `rfork`
+TrackingNamespace(subparser='bench', bench_type='serve', dispatch_function=<function OmniBenchmarkServingSubcommand.cmd at 0xfffebede4ea0>, omni=True, trust_remote_code=True, seed=0, num_prompts=32, dataset_name='seed-tts', no_stream=False, dataset_path='/workspace/user_data/seed-tts-eval', no_oversample=True, skip_chat_template=False, enable_multimodal_chat=False, disable_shuffle=False, custom_output_len=256, custom_ensure_client_side_data=False, spec_bench_output_len=256, spec_bench_category=None, sonnet_input_len=550, sonnet_output_len=150, sonnet_prefix_len=200, sharegpt_output_len=None, timed_trace_chunk_hash_size=16, timed_trace_sec_multiplier=1, timed_trace_label_timestamp='timestamp', timed_trace_label_input_length='input_length', timed_trace_label_output_length='output_length', timed_trace_label_hash_ids='hash_ids', blazedit_min_distance=0.0, blazedit_max_distance=1.0, asr_max_audio_len_sec=inf, asr_min_audio_len_sec=0.0, random_input_len=1024, random_output_len=128, random_range_ratio='0.0', random_prefix_len=0, random_batch_size=1, no_reranker=False, random_mm_base_items_per_request=1, random_mm_num_mm_items_range_ratio=0.0, random_mm_limit_mm_per_prompt={'image': 255, 'video': 1}, random_mm_bucket_config={(256, 256, 1): 0.5, (720, 1280, 1): 0.5, (720, 1280, 16): 0.0}, hf_subset=None, hf_split=None, hf_name=None, hf_output_len=None, bfcl_categories=None, prefix_repetition_prefix_len=256, prefix_repetition_suffix_len=256, prefix_repetition_num_prefixes=10, prefix_repetition_output_len=128, speed_bench_dataset_subset='qualitative', speed_bench_output_len=4096, speed_bench_category=None, label=None, backend='openai-chat-omni', base_url=None, host='127.0.0.1', port=8091, endpoint='/v1/chat/completions', header=None, max_concurrency=1, model='openbmb/MiniCPM-o-4_5', input_len=None, output_len=None, tokenizer='/workspace/shared_assets/models/OpenBMB/MiniCPM-o-4_5', tokenizer_mode='auto', use_beam_search=False, logprobs=None, request_rate=inf, burstiness=1.0, disable_tqdm=False, num_warmups=2, profile=False, save_result=True, save_detailed=False, append_result=False, metadata=None, result_dir='/workspace/user_data/minicpm-x-ascend/artifacts/baseline-c1-01/results', result_filename=None, ignore_eos=False, self_timed=None, percentile_metrics='ttft,e2el,audio_ttfp,audio_rtf,audio_duration', metric_percentiles='99', goodput=None, request_id_prefix='bench-d20a29fd-', top_p=None, top_k=None, min_p=None, temperature=None, frequency_penalty=None, presence_penalty=None, repetition_penalty=None, served_model_name=None, lora_modules=None, lora_assignment='random', ramp_up_strategy=None, ramp_up_start_rps=None, ramp_up_end_rps=None, ready_check_timeout_sec=0, chat_template_kwargs=None, extra_body={'modalities': ['text', 'audio'], 'chat_template_kwargs': {'enable_thinking': False, 'use_tts_template': True}}, skip_tokenizer_init=False, insecure=False, plot_timeline=False, timeline_itl_thresholds='25,50', plot_dataset_stats=False, daily_omni_qa_json=None, daily_omni_video_dir=None, daily_omni_inline_local_video=False, daily_omni_input_mode='all', daily_omni_pack_mode='qwen', daily_omni_save_eval_items=False, videomme_parquet=None, videomme_video_dir=None, videomme_subtitle_dir=None, videomme_pack_mode='minicpm-frames', videomme_max_frames=None, videomme_duration='all', videomme_use_subtitle=False, videomme_inline_local_video=False, videomme_save_eval_items=False, seed_tts_locale='en', seed_tts_turns_per_session=1, seed_tts_root=None, seed_tts_file_ref_audio=False, seed_tts_inline_ref_audio=False, seed_tts_system_prompt=None, seed_tts_wer_eval=False, seed_tts_wer_save_items=False, print_stage=False, bot_task='think')
+INFO 08-13 03:20:47 [seed_tts_dataset.py:210] Loaded Seed-TTS: root=/workspace/user_data/seed-tts-eval locale=en rows=1088 inline_ref_audio=True
+INFO 08-13 03:20:49 [seed_tts_dataset.py:283] Seed-TTS: built 32 sessions (asked 32, turns_per_session=1)
+INFO 08-13 03:20:49 [datasets.py:309] Skipping oversampling. Total samples: 32.
+WARNING: vllm bench serve no longer sets temperature==0 (greedy) in requests by default. The default will be determined on the server side and can be model/API specific. For the old behavior, include --temperature=0.
+Starting initial single prompt test run...
+Skipping endpoint ready check.
+Warming up with 2 requests...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [00:01<00:01,  1.68s/it]100%|██████████| 2/2 [00:03<00:00,  1.64s/it]100%|██████████| 2/2 [00:03<00:00,  1.65s/it]
+Warmup run completed.
+Starting main benchmark run...
+Traffic request rate: inf
+Burstiness factor: 1.0 (Poisson process)
+Maximum request concurrency: 1
+  0%|          | 0/32 [00:00<?, ?it/s]  3%|▎         | 1/32 [00:01<00:50,  1.63s/it]  6%|▋         | 2/32 [00:03<00:48,  1.63s/it]  9%|▉         | 3/32 [00:04<00:43,  1.51s/it] 12%|█▎        | 4/32 [00:06<00:46,  1.65s/it] 16%|█▌        | 5/32 [00:08<00:50,  1.87s/it] 19%|█▉        | 6/32 [00:10<00:49,  1.88s/it] 22%|██▏       | 7/32 [00:12<00:49,  1.99s/it] 25%|██▌       | 8/32 [00:14<00:42,  1.79s/it] 28%|██▊       | 9/32 [00:16<00:45,  1.99s/it] 31%|███▏      | 10/32 [00:18<00:44,  2.04s/it] 34%|███▍      | 11/32 [00:20<00:41,  1.99s/it] 38%|███▊      | 12/32 [00:22<00:39,  1.98s/it] 41%|████      | 13/32 [00:24<00:33,  1.79s/it] 44%|████▍     | 14/32 [00:26<00:34,  1.91s/it] 47%|████▋     | 15/32 [00:27<00:30,  1.79s/it] 50%|█████     | 16/32 [00:29<00:28,  1.75s/it] 53%|█████▎    | 17/32 [00:31<00:28,  1.93s/it] 56%|█████▋    | 18/32 [00:33<00:26,  1.90s/it] 59%|█████▉    | 19/32 [00:35<00:24,  1.92s/it] 62%|██████▎   | 20/32 [00:37<00:22,  1.92s/it] 66%|██████▌   | 21/32 [00:39<00:19,  1.82s/it] 69%|██████▉   | 22/32 [00:41<00:20,  2.03s/it] 72%|███████▏  | 23/32 [00:43<00:18,  2.06s/it] 75%|███████▌  | 24/32 [00:45<00:16,  2.01s/it] 78%|███████▊  | 25/32 [00:47<00:14,  2.05s/it] 81%|████████▏ | 26/32 [00:49<00:12,  2.09s/it] 84%|████████▍ | 27/32 [00:51<00:10,  2.09s/it] 88%|████████▊ | 28/32 [00:53<00:07,  1.90s/it] 91%|█████████ | 29/32 [00:55<00:06,  2.03s/it] 94%|█████████▍| 30/32 [00:58<00:04,  2.12s/it] 97%|█████████▋| 31/32 [00:59<00:02,  2.02s/it]100%|██████████| 32/32 [01:02<00:00,  2.06s/it]100%|██████████| 32/32 [01:02<00:00,  1.94s/it]
+tip: install termplotlib and gnuplot to plot the metrics
+============ Serving Benchmark Result ============
+Successful requests:                     32        
+Failed requests:                         0         
+Maximum request concurrency:             1         
+Benchmark duration (s):                  62.02     
+Request throughput (req/s):              0.52      
+Peak concurrent requests:                2.00      
+----------------End-to-end Latency----------------
+Mean E2EL (ms):                          1937.74   
+Median E2EL (ms):                        1931.60   
+P99 E2EL (ms):                           2503.87   
+================== Text Result ===================
+Total input tokens:                      4801      
+Total generated tokens:                  481       
+Output token throughput (tok/s):         7.75      
+Peak output token throughput (tok/s):    23.00     
+Peak concurrent requests:                2.00      
+Total Token throughput (tok/s):          85.16     
+---------------Time to First Token----------------
+Mean TTFT (ms):                          313.34    
+Median TTFT (ms):                        309.65    
+P99 TTFT (ms):                           450.56    
+================== Audio Result ==================
+Total audio duration generated(s):       139.00    
+Total audio frames generated:            3336000   
+Audio throughput(audio duration/s):      2.24      
+Streaming continuity OK rate:            100.00%   
+---------------Time to First Packet---------------
+Mean AUDIO_TTFP (ms):                    1003.43   
+Median AUDIO_TTFP (ms):                  1005.61   
+P99 AUDIO_TTFP (ms):                     1146.15   
+-----------------Real Time Factor-----------------
+Mean AUDIO_RTF:                          0.46      
+Median AUDIO_RTF:                        0.45      
+P99 AUDIO_RTF:                           0.64      
+------------------Audio Duration------------------
+Mean AUDIO_DURATION (s):                 4.34      
+Median AUDIO_DURATION (s):               4.40      
+P99 AUDIO_DURATION (s):                  6.20      
+==================================================
+|██████████| 32/32 [01:02<00:00,  1.94s/it]
+tip: install termplotlib and gnuplot to plot the metrics
+============ Serving Benchmark Result ============
+Successful requests:                     32        
+Failed requests:                         0         
+Maximum request concurrency:             1         
+Benchmark duration (s):                  62.02     
+Request throughput (req/s):              0.52      
+Peak concurrent requests:                2.00      
+----------------End-to-end Latency----------------
+Mean E2EL (ms):                          1937.74   
+Median E2EL (ms):                        1931.60   
+P99 E2EL (ms):                           2503.87   
+================== Text Result ===================
+Total input tokens:                      4801      
+Total generated tokens:                  481       
+Output token throughput (tok/s):         7.75      
+Peak output token throughput (tok/s):    23.00     
+Peak concurrent requests:                2.00      
+Total Token throughput (tok/s):          85.16     
+---------------Time to First Token----------------
+Mean TTFT (ms):                          313.34    
+Median TTFT (ms):                        309.65    
+P99 TTFT (ms):                           450.56    
+================== Audio Result ==================
+Total audio duration generated(s):       139.00    
+Total audio frames generated:            3336000   
+Audio throughput(audio duration/s):      2.24      
+Streaming continuity OK rate:            100.00%   
+---------------Time to First Packet---------------
+Mean AUDIO_TTFP (ms):                    1003.43   
+Median AUDIO_TTFP (ms):                  1005.61   
+P99 AUDIO_TTFP (ms):                     1146.15   
+-----------------Real Time Factor-----------------
+Mean AUDIO_RTF:                          0.46      
+Median AUDIO_RTF:                        0.45      
+P99 AUDIO_RTF:                           0.64      
+------------------Audio Duration------------------
+Mean AUDIO_DURATION (s):                 4.34      
+Median AUDIO_DURATION (s):               4.40      
+P99 AUDIO_DURATION (s):                  6.20      
+==================================================
+INFO 08-13 03:41:11 [__init__.py:52] Available plugins for group vllm.platform_plugins:
+INFO 08-13 03:41:11 [__init__.py:54] - ascend -> vllm_ascend:register
+INFO 08-13 03:41:11 [__init__.py:57] All plugins in this group will be loaded. Set `VLLM_PLUGINS` to control which plugins to load.
+INFO 08-13 03:41:11 [__init__.py:237] Platform plugin ascend is activated
+INFO 08-13 03:41:11 [platform.py:62] Breakable cudagraph is force disabled on Ascend because DeepSeek V4 PIECEWISE cudagraph is not supported yet.
+|██████████| 32/32 [01:02<00:00,  1.94s/it]
+tip: install termplotlib and gnuplot to plot the metrics
+============ Serving Benchmark Result ============
+Successful requests:                     32        
+Failed requests:                         0         
+Maximum request concurrency:             1         
+Benchmark duration (s):                  62.02     
+Request throughput (req/s):              0.52      
+Peak concurrent requests:                2.00      
+----------------End-to-end Latency----------------
+Mean E2EL (ms):                          1937.74   
+Median E2EL (ms):                        1931.60   
+P99 E2EL (ms):                           2503.87   
+================== Text Result ===================
+Total input tokens:                      4801      
+Total generated tokens:                  481       
+Output token throughput (tok/s):         7.75      
+Peak output token throughput (tok/s):    23.00     
+Peak concurrent requests:                2.00      
+Total Token throughput (tok/s):          85.16     
+---------------Time to First Token----------------
+Mean TTFT (ms):                          313.34    
+Median TTFT (ms):                        309.65    
+P99 TTFT (ms):                           450.56    
+================== Audio Result ==================
+Total audio duration generated(s):       139.00    
+Total audio frames generated:            3336000   
+Audio throughput(audio duration/s):      2.24      
+Streaming continuity OK rate:            100.00%   
+---------------Time to First Packet---------------
+Mean AUDIO_TTFP (ms):                    1003.43   
+Median AUDIO_TTFP (ms):                  1005.61   
+P99 AUDIO_TTFP (ms):                     1146.15   
+-----------------Real Time Factor-----------------
+Mean AUDIO_RTF:                          0.46      
+Median AUDIO_RTF:                        0.45      
+P99 AUDIO_RTF:                           0.64      
+------------------Audio Duration------------------
+Mean AUDIO_DURATION (s):                 4.34      
+Median AUDIO_DURATION (s):               4.40      
+P99 AUDIO_DURATION (s):                  6.20      
+==================================================
+INFO 08-13 03:41:11 [__init__.py:52] Available plugins for group vllm.platform_plugins:
+INFO 08-13 03:41:11 [__init__.py:54] - ascend -> vllm_ascend:register
+INFO 08-13 03:41:11 [__init__.py:57] All plugins in this group will be loaded. Set `VLLM_PLUGINS` to control which plugins to load.
+INFO 08-13 03:41:11 [__init__.py:237] Platform plugin ascend is activated
+INFO 08-13 03:41:11 [platform.py:62] Breakable cudagraph is force disabled on Ascend because DeepSeek V4 PIECEWISE cudagraph is not supported yet.
+/workspace/user_data/vllm-omni/vllm_omni/version.py:55: RuntimeWarning: vLLM and vLLM-Omni appear to have mismatched major/minor versions:
+ --> vLLM-Omni version 0.25.0
+ --> vLLM version 0.1.dev1+ge5588e49b
+This will likely cause compatibility issues.
+  warn_if_misaligned_vllm_version()
+INFO 08-13 03:41:21 [patch.py:252] NVFP4 W4A4 weight_scale NaN-clamp: installed.
+INFO 08-13 03:41:21 [patch.py:481] [cumem-cuda] CuMemAllocator._python_free_callback patched: asleep guard extended to all platforms.
+|██████████| 32/32 [01:02<00:00,  1.94s/it]
+tip: install termplotlib and gnuplot to plot the metrics
+============ Serving Benchmark Result ============
+Successful requests:                     32        
+Failed requests:                         0         
+Maximum request concurrency:             1         
+Benchmark duration (s):                  62.02     
+Request throughput (req/s):              0.52      
+Peak concurrent requests:                2.00      
+----------------End-to-end Latency----------------
+Mean E2EL (ms):                          1937.74   
+Median E2EL (ms):                        1931.60   
+P99 E2EL (ms):                           2503.87   
+================== Text Result ===================
+Total input tokens:                      4801      
+Total generated tokens:                  481       
+Output token throughput (tok/s):         7.75      
+Peak output token throughput (tok/s):    23.00     
+Peak concurrent requests:                2.00      
+Total Token throughput (tok/s):          85.16     
+---------------Time to First Token----------------
+Mean TTFT (ms):                          313.34    
+Median TTFT (ms):                        309.65    
+P99 TTFT (ms):                           450.56    
+================== Audio Result ==================
+Total audio duration generated(s):       139.00    
+Total audio frames generated:            3336000   
+Audio throughput(audio duration/s):      2.24      
+Streaming continuity OK rate:            100.00%   
+---------------Time to First Packet---------------
+Mean AUDIO_TTFP (ms):                    1003.43   
+Median AUDIO_TTFP (ms):                  1005.61   
+P99 AUDIO_TTFP (ms):                     1146.15   
+-----------------Real Time Factor-----------------
+Mean AUDIO_RTF:                          0.46      
+Median AUDIO_RTF:                        0.45      
+P99 AUDIO_RTF:                           0.64      
+------------------Audio Duration------------------
+Mean AUDIO_DURATION (s):                 4.34      
+Median AUDIO_DURATION (s):               4.40      
+P99 AUDIO_DURATION (s):                  6.20      
+==================================================
+INFO 08-13 03:41:11 [__init__.py:52] Available plugins for group vllm.platform_plugins:
+INFO 08-13 03:41:11 [__init__.py:54] - ascend -> vllm_ascend:register
+INFO 08-13 03:41:11 [__init__.py:57] All plugins in this group will be loaded. Set `VLLM_PLUGINS` to control which plugins to load.
+INFO 08-13 03:41:11 [__init__.py:237] Platform plugin ascend is activated
+INFO 08-13 03:41:11 [platform.py:62] Breakable cudagraph is force disabled on Ascend because DeepSeek V4 PIECEWISE cudagraph is not supported yet.
+/workspace/user_data/vllm-omni/vllm_omni/version.py:55: RuntimeWarning: vLLM and vLLM-Omni appear to have mismatched major/minor versions:
+ --> vLLM-Omni version 0.25.0
+ --> vLLM version 0.1.dev1+ge5588e49b
+This will likely cause compatibility issues.
+  warn_if_misaligned_vllm_version()
+INFO 08-13 03:41:21 [patch.py:252] NVFP4 W4A4 weight_scale NaN-clamp: installed.
+INFO 08-13 03:41:21 [patch.py:481] [cumem-cuda] CuMemAllocator._python_free_callback patched: asleep guard extended to all platforms.
+INFO 08-13 03:41:30 [main.py:54] Delegating entrypoint handling to vllm-omni
+2026-08-13 03:41:30,325 - 402464 - ServiceProfiler - INFO - VLLM_USE_V1 not set, auto-detected via vLLM 0.1.dev1+ge5588e49b.empty: default 0
+INFO 08-13 03:41:30 [__init__.py:112] Registered model loader `<class 'vllm_ascend.model_loader.netloader.netloader.ModelNetLoaderElastic'>` with load format `netloader`
+INFO 08-13 03:41:30 [__init__.py:112] Registered model loader `<class 'vllm_ascend.model_loader.rfork.rfork_loader.RForkModelLoader'>` with load format `rfork`
+TrackingNamespace(subparser='bench', bench_type='serve', dispatch_function=<function OmniBenchmarkServingSubcommand.cmd at 0xfffea8cc4ea0>, omni=True, trust_remote_code=True, seed=0, num_prompts=32, dataset_name='seed-tts', no_stream=False, dataset_path='/workspace/user_data/seed-tts-eval', no_oversample=True, skip_chat_template=False, enable_multimodal_chat=False, disable_shuffle=False, custom_output_len=256, custom_ensure_client_side_data=False, spec_bench_output_len=256, spec_bench_category=None, sonnet_input_len=550, sonnet_output_len=150, sonnet_prefix_len=200, sharegpt_output_len=None, timed_trace_chunk_hash_size=16, timed_trace_sec_multiplier=1, timed_trace_label_timestamp='timestamp', timed_trace_label_input_length='input_length', timed_trace_label_output_length='output_length', timed_trace_label_hash_ids='hash_ids', blazedit_min_distance=0.0, blazedit_max_distance=1.0, asr_max_audio_len_sec=inf, asr_min_audio_len_sec=0.0, random_input_len=1024, random_output_len=128, random_range_ratio='0.0', random_prefix_len=0, random_batch_size=1, no_reranker=False, random_mm_base_items_per_request=1, random_mm_num_mm_items_range_ratio=0.0, random_mm_limit_mm_per_prompt={'image': 255, 'video': 1}, random_mm_bucket_config={(256, 256, 1): 0.5, (720, 1280, 1): 0.5, (720, 1280, 16): 0.0}, hf_subset=None, hf_split=None, hf_name=None, hf_output_len=None, bfcl_categories=None, prefix_repetition_prefix_len=256, prefix_repetition_suffix_len=256, prefix_repetition_num_prefixes=10, prefix_repetition_output_len=128, speed_bench_dataset_subset='qualitative', speed_bench_output_len=4096, speed_bench_category=None, label=None, backend='openai-chat-omni', base_url=None, host='127.0.0.1', port=8091, endpoint='/v1/chat/completions', header=None, max_concurrency=1, model='openbmb/MiniCPM-o-4_5', input_len=None, output_len=None, tokenizer='/workspace/shared_assets/models/OpenBMB/MiniCPM-o-4_5', tokenizer_mode='auto', use_beam_search=False, logprobs=None, request_rate=inf, burstiness=1.0, disable_tqdm=False, num_warmups=2, profile=False, save_result=True, save_detailed=False, append_result=False, metadata=None, result_dir='/workspace/user_data/minicpm-x-ascend/artifacts/baseline-c1-01/results', result_filename=None, ignore_eos=False, self_timed=None, percentile_metrics='ttft,e2el,audio_ttfp,audio_rtf,audio_duration', metric_percentiles='99', goodput=None, request_id_prefix='bench-d23a242e-', top_p=None, top_k=None, min_p=None, temperature=None, frequency_penalty=None, presence_penalty=None, repetition_penalty=None, served_model_name=None, lora_modules=None, lora_assignment='random', ramp_up_strategy=None, ramp_up_start_rps=None, ramp_up_end_rps=None, ready_check_timeout_sec=0, chat_template_kwargs=None, extra_body={'modalities': ['text', 'audio'], 'chat_template_kwargs': {'enable_thinking': False, 'use_tts_template': True}}, skip_tokenizer_init=False, insecure=False, plot_timeline=False, timeline_itl_thresholds='25,50', plot_dataset_stats=False, daily_omni_qa_json=None, daily_omni_video_dir=None, daily_omni_inline_local_video=False, daily_omni_input_mode='all', daily_omni_pack_mode='qwen', daily_omni_save_eval_items=False, videomme_parquet=None, videomme_video_dir=None, videomme_subtitle_dir=None, videomme_pack_mode='minicpm-frames', videomme_max_frames=None, videomme_duration='all', videomme_use_subtitle=False, videomme_inline_local_video=False, videomme_save_eval_items=False, seed_tts_locale='en', seed_tts_turns_per_session=1, seed_tts_root=None, seed_tts_file_ref_audio=False, seed_tts_inline_ref_audio=False, seed_tts_system_prompt=None, seed_tts_wer_eval=False, seed_tts_wer_save_items=False, print_stage=False, bot_task='think')
+INFO 08-13 03:41:31 [seed_tts_dataset.py:210] Loaded Seed-TTS: root=/workspace/user_data/seed-tts-eval locale=en rows=1088 inline_ref_audio=True
+INFO 08-13 03:41:33 [seed_tts_dataset.py:283] Seed-TTS: built 32 sessions (asked 32, turns_per_session=1)
+INFO 08-13 03:41:33 [datasets.py:309] Skipping oversampling. Total samples: 32.
+WARNING: vllm bench serve no longer sets temperature==0 (greedy) in requests by default. The default will be determined on the server side and can be model/API specific. For the old behavior, include --temperature=0.
+Starting initial single prompt test run...
+Skipping endpoint ready check.
+Warming up with 2 requests...
+  0%|          | 0/2 [00:00<?, ?it/s]le_multimodal_chat=False, disable_shuffle=False, custom_output_len=256, custom_ensure_client_side_data=False, spec_bench_output_len=256, spec_bench_category=None, sonnet_input_len=550, sonnet_output_len=150, sonnet_prefix_len=200, sharegpt_output_len=None, timed_trace_chunk_hash_size=16, timed_trace_sec_multiplier=1, timed_trace_label_timestamp='timestamp', timed_trace_label_input_length='input_length', timed_trace_label_output_length='output_length', timed_trace_label_hash_ids='hash_ids', blazedit_min_distance=0.0, blazedit_max_distance=1.0, asr_max_audio_len_sec=inf, asr_min_audio_len_sec=0.0, random_input_len=1024, random_output_len=128, random_range_ratio='0.0', random_prefix_len=0, random_batch_size=1, no_reranker=False, random_mm_base_items_per_request=1, random_mm_num_mm_items_range_ratio=0.0, random_mm_limit_mm_per_prompt={'image': 255, 'video': 1}, random_mm_bucket_config={(256, 256, 1): 0.5, (720, 1280, 1): 0.5, (720, 1280, 16): 0.0}, hf_subset=None, hf_split=None, hf_name=None, hf_output_len=None, bfcl_categories=None, prefix_repetition_prefix_len=256, prefix_repetition_suffix_len=256, prefix_repetition_num_prefixes=10, prefix_repetition_output_len=128, speed_bench_dataset_subset='qualitative', speed_bench_output_len=4096, speed_bench_category=None, label=None, backend='openai-chat-omni', base_url=None, host='127.0.0.1', port=8091, endpoint='/v1/chat/completions', header=None, max_concurrency=1, model='openbmb/MiniCPM-o-4_5', input_len=None, output_len=None, tokenizer='/workspace/shared_assets/models/OpenBMB/MiniCPM-o-4_5', tokenizer_mode='auto', use_beam_search=False, logprobs=None, request_rate=inf, burstiness=1.0, disable_tqdm=False, num_warmups=2, profile=False, save_result=True, save_detailed=False, append_result=False, metadata=None, result_dir='/workspace/user_data/minicpm-x-ascend/artifacts/baseline-c1-01/results', result_filename=None, ignore_eos=False, self_timed=None, percentile_metrics='ttft,e2el,audio_ttfp,audio_rtf,audio_duration', metric_percentiles='99', goodput=None, request_id_prefix='bench-d23a242e-', top_p=None, top_k=None, min_p=None, temperature=None, frequency_penalty=None, presence_penalty=None, repetition_penalty=None, served_model_name=None, lora_modules=None, lora_assignment='random', ramp_up_strategy=None, ramp_up_start_rps=None, ramp_up_end_rps=None, ready_check_timeout_sec=0, chat_template_kwargs=None, extra_body={'modalities': ['text', 'audio'], 'chat_template_kwargs': {'enable_thinking': False, 'use_tts_template': True}}, skip_tokenizer_init=False, insecure=False, plot_timeline=False, timeline_itl_thresholds='25,50', plot_dataset_stats=False, daily_omni_qa_json=None, daily_omni_video_dir=None, daily_omni_inline_local_video=False, daily_omni_input_mode='all', daily_omni_pack_mode='qwen', daily_omni_save_eval_items=False, videomme_parquet=None, videomme_video_dir=None, videomme_subtitle_dir=None, videomme_pack_mode='minicpm-frames', videomme_max_frames=None, videomme_duration='all', videomme_use_subtitle=False, videomme_inline_local_video=False, videomme_save_eval_items=False, seed_tts_locale='en', seed_tts_turns_per_session=1, seed_tts_root=None, seed_tts_file_ref_audio=False, seed_tts_inline_ref_audio=False, seed_tts_system_prompt=None, seed_tts_wer_eval=False, seed_tts_wer_save_items=False, print_stage=False, bot_task='think')
+INFO 08-13 03:41:31 [seed_tts_dataset.py:210] Loaded Seed-TTS: root=/workspace/user_data/seed-tts-eval locale=en rows=1088 inline_ref_audio=True
+INFO 08-13 03:41:33 [seed_tts_dataset.py:283] Seed-TTS: built 32 sessions (asked 32, turns_per_session=1)
+INFO 08-13 03:41:33 [datasets.py:309] Skipping oversampling. Total samples: 32.
+WARNING: vllm bench serve no longer sets temperature==0 (greedy) in requests by default. The default will be determined on the server side and can be model/API specific. For the old behavior, include --temperature=0.
+Starting initial single prompt test run...
+Skipping endpoint ready check.
+Warming up with 2 requests...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [00:01<00:01,  1.67s/it]100%|██████████| 2/2 [00:03<00:00,  1.65s/it]100%|██████████| 2/2 [00:03<00:00,  1.65s/it]
+Warmup run completed.
+Starting main benchmark run...
+Traffic request rate: inf
+Burstiness factor: 1.0 (Poisson process)
+Maximum request concurrency: 1
+  0%|          | 0/32 [00:00<?, ?it/s]��█████| 2/2 [00:03<00:00,  1.65s/it]100%|██████████| 2/2 [00:03<00:00,  1.65s/it]
+Warmup run completed.
+Starting main benchmark run...
+Traffic request rate: inf
+Burstiness factor: 1.0 (Poisson process)
+Maximum request concurrency: 1
+  0%|          | 0/32 [00:00<?, ?it/s]  3%|▎         | 1/32 [00:01<00:50,  1.63s/it]��█████| 2/2 [00:03<00:00,  1.65s/it]100%|██████████| 2/2 [00:03<00:00,  1.65s/it]
+Warmup run completed.
+Starting main benchmark run...
+Traffic request rate: inf
+Burstiness factor: 1.0 (Poisson process)
+Maximum request concurrency: 1
+  0%|          | 0/32 [00:00<?, ?it/s]  3%|▎         | 1/32 [00:01<00:50,  1.63s/it]  6%|▋         | 2/32 [00:03<00:49,  1.66s/it]��█████| 2/2 [00:03<00:00,  1.65s/it]100%|██████████| 2/2 [00:03<00:00,  1.65s/it]
+Warmup run completed.
+Starting main benchmark run...
+Traffic request rate: inf
+Burstiness factor: 1.0 (Poisson process)
+Maximum request concurrency: 1
+  0%|          | 0/32 [00:00<?, ?it/s]  3%|▎         | 1/32 [00:01<00:50,  1.63s/it]  6%|▋         | 2/32 [00:03<00:49,  1.66s/it]  9%|▉         | 3/32 [00:04<00:44,  1.54s/it]��█████| 2/2 [00:03<00:00,  1.65s/it]100%|██████████| 2/2 [00:03<00:00,  1.65s/it]
+Warmup run completed.
+Starting main benchmark run...
+Traffic request rate: inf
+Burstiness factor: 1.0 (Poisson process)
+Maximum request concurrency: 1
+  0%|          | 0/32 [00:00<?, ?it/s]  3%|▎         | 1/32 [00:01<00:50,  1.63s/it]  6%|▋         | 2/32 [00:03<00:49,  1.66s/it]  9%|▉         | 3/32 [00:04<00:44,  1.54s/it] 12%|█▎        | 4/32 [00:06<00:47,  1.69s/it]��█████| 2/2 [00:03<00:00,  1.65s/it]100%|██████████| 2/2 [00:03<00:00,  1.65s/it]
+Warmup run completed.
+Starting main benchmark run...
+Traffic request rate: inf
+Burstiness factor: 1.0 (Poisson process)
+Maximum request concurrency: 1
+  0%|          | 0/32 [00:00<?, ?it/s]  3%|▎         | 1/32 [00:01<00:50,  1.63s/it]  6%|▋         | 2/32 [00:03<00:49,  1.66s/it]  9%|▉         | 3/32 [00:04<00:44,  1.54s/it] 12%|█▎        | 4/32 [00:06<00:47,  1.69s/it] 16%|█▌        | 5/32 [00:08<00:51,  1.92s/it]��█████| 2/2 [00:03<00:00,  1.65s/it]100%|██████████| 2/2 [00:03<00:00,  1.65s/it]
+Warmup run completed.
+Starting main benchmark run...
+Traffic request rate: inf
+Burstiness factor: 1.0 (Poisson process)
+Maximum request concurrency: 1
+  0%|          | 0/32 [00:00<?, ?it/s]  3%|▎         | 1/32 [00:01<00:50,  1.63s/it]  6%|▋         | 2/32 [00:03<00:49,  1.66s/it]  9%|▉         | 3/32 [00:04<00:44,  1.54s/it] 12%|█▎        | 4/32 [00:06<00:47,  1.69s/it] 16%|█▌        | 5/32 [00:08<00:51,  1.92s/it] 19%|█▉        | 6/32 [00:10<00:49,  1.91s/it]��█████| 2/2 [00:03<00:00,  1.65s/it]100%|██████████| 2/2 [00:03<00:00,  1.65s/it]
+Warmup run completed.
+Starting main benchmark run...
+Traffic request rate: inf
+Burstiness factor: 1.0 (Poisson process)
+Maximum request concurrency: 1
+  0%|          | 0/32 [00:00<?, ?it/s]  3%|▎         | 1/32 [00:01<00:50,  1.63s/it]  6%|▋         | 2/32 [00:03<00:49,  1.66s/it]  9%|▉         | 3/32 [00:04<00:44,  1.54s/it] 12%|█▎        | 4/32 [00:06<00:47,  1.69s/it] 16%|█▌        | 5/32 [00:08<00:51,  1.92s/it] 19%|█▉        | 6/32 [00:10<00:49,  1.91s/it] 22%|██▏       | 7/32 [00:13<00:50,  2.01s/it]��█████| 2/2 [00:03<00:00,  1.65s/it]100%|██████████| 2/2 [00:03<00:00,  1.65s/it]
+Warmup run completed.
+Starting main benchmark run...
+Traffic request rate: inf
+Burstiness factor: 1.0 (Poisson process)
+Maximum request concurrency: 1
+  0%|          | 0/32 [00:00<?, ?it/s]  3%|▎         | 1/32 [00:01<00:50,  1.63s/it]  6%|▋         | 2/32 [00:03<00:49,  1.66s/it]  9%|▉         | 3/32 [00:04<00:44,  1.54s/it] 12%|█▎        | 4/32 [00:06<00:47,  1.69s/it] 16%|█▌        | 5/32 [00:08<00:51,  1.92s/it] 19%|█▉        | 6/32 [00:10<00:49,  1.91s/it] 22%|██▏       | 7/32 [00:13<00:50,  2.01s/it] 25%|██▌       | 8/32 [00:14<00:42,  1.79s/it]��█████| 2/2 [00:03<00:00,  1.65s/it]100%|██████████| 2/2 [00:03<00:00,  1.65s/it]
+Warmup run completed.
+Starting main benchmark run...
+Traffic request rate: inf
+Burstiness factor: 1.0 (Poisson process)
+Maximum request concurrency: 1
+  0%|          | 0/32 [00:00<?, ?it/s]  3%|▎         | 1/32 [00:01<00:50,  1.63s/it]  6%|▋         | 2/32 [00:03<00:49,  1.66s/it]  9%|▉         | 3/32 [00:04<00:44,  1.54s/it] 12%|█▎        | 4/32 [00:06<00:47,  1.69s/it] 16%|█▌        | 5/32 [00:08<00:51,  1.92s/it] 19%|█▉        | 6/32 [00:10<00:49,  1.91s/it] 22%|██▏       | 7/32 [00:13<00:50,  2.01s/it] 25%|██▌       | 8/32 [00:14<00:42,  1.79s/it] 28%|██▊       | 9/32 [00:16<00:46,  2.02s/it]��█████| 2/2 [00:03<00:00,  1.65s/it]100%|██████████| 2/2 [00:03<00:00,  1.65s/it]
+Warmup run completed.
+Starting main benchmark run...
+Traffic request rate: inf
+Burstiness factor: 1.0 (Poisson process)
+Maximum request concurrency: 1
+  0%|          | 0/32 [00:00<?, ?it/s]  3%|▎         | 1/32 [00:01<00:50,  1.63s/it]  6%|▋         | 2/32 [00:03<00:49,  1.66s/it]  9%|▉         | 3/32 [00:04<00:44,  1.54s/it] 12%|█▎        | 4/32 [00:06<00:47,  1.69s/it] 16%|█▌        | 5/32 [00:08<00:51,  1.92s/it] 19%|█▉        | 6/32 [00:10<00:49,  1.91s/it] 22%|██▏       | 7/32 [00:13<00:50,  2.01s/it] 25%|██▌       | 8/32 [00:14<00:42,  1.79s/it] 28%|██▊       | 9/32 [00:16<00:46,  2.02s/it] 31%|███▏      | 10/32 [00:19<00:45,  2.08s/it]��█████| 2/2 [00:03<00:00,  1.65s/it]100%|██████████| 2/2 [00:03<00:00,  1.65s/it]
+Warmup run completed.
+Starting main benchmark run...
+Traffic request rate: inf
+Burstiness factor: 1.0 (Poisson process)
+Maximum request concurrency: 1
+  0%|          | 0/32 [00:00<?, ?it/s]  3%|▎         | 1/32 [00:01<00:50,  1.63s/it]  6%|▋         | 2/32 [00:03<00:49,  1.66s/it]  9%|▉         | 3/32 [00:04<00:44,  1.54s/it] 12%|█▎        | 4/32 [00:06<00:47,  1.69s/it] 16%|█▌        | 5/32 [00:08<00:51,  1.92s/it] 19%|█▉        | 6/32 [00:10<00:49,  1.91s/it] 22%|██▏       | 7/32 [00:13<00:50,  2.01s/it] 25%|██▌       | 8/32 [00:14<00:42,  1.79s/it] 28%|██▊       | 9/32 [00:16<00:46,  2.02s/it] 31%|███▏      | 10/32 [00:19<00:45,  2.08s/it] 34%|███▍      | 11/32 [00:21<00:42,  2.02s/it]��█████| 2/2 [00:03<00:00,  1.65s/it]100%|██████████| 2/2 [00:03<00:00,  1.65s/it]
+Warmup run completed.
+Starting main benchmark run...
+Traffic request rate: inf
+Burstiness factor: 1.0 (Poisson process)
+Maximum request concurrency: 1
+  0%|          | 0/32 [00:00<?, ?it/s]  3%|▎         | 1/32 [00:01<00:50,  1.63s/it]  6%|▋         | 2/32 [00:03<00:49,  1.66s/it]  9%|▉         | 3/32 [00:04<00:44,  1.54s/it] 12%|█▎        | 4/32 [00:06<00:47,  1.69s/it] 16%|█▌        | 5/32 [00:08<00:51,  1.92s/it] 19%|█▉        | 6/32 [00:10<00:49,  1.91s/it] 22%|██▏       | 7/32 [00:13<00:50,  2.01s/it] 25%|██▌       | 8/32 [00:14<00:42,  1.79s/it] 28%|██▊       | 9/32 [00:16<00:46,  2.02s/it] 31%|███▏      | 10/32 [00:19<00:45,  2.08s/it] 34%|███▍      | 11/32 [00:21<00:42,  2.02s/it] 38%|███▊      | 12/32 [00:22<00:40,  2.01s/it]��█████| 2/2 [00:03<00:00,  1.65s/it]100%|██████████| 2/2 [00:03<00:00,  1.65s/it]
+Warmup run completed.
+Starting main benchmark run...
+Traffic request rate: inf
+Burstiness factor: 1.0 (Poisson process)
+Maximum request concurrency: 1
+  0%|          | 0/32 [00:00<?, ?it/s]  3%|▎         | 1/32 [00:01<00:50,  1.63s/it]  6%|▋         | 2/32 [00:03<00:49,  1.66s/it]  9%|▉         | 3/32 [00:04<00:44,  1.54s/it] 12%|█▎        | 4/32 [00:06<00:47,  1.69s/it] 16%|█▌        | 5/32 [00:08<00:51,  1.92s/it] 19%|█▉        | 6/32 [00:10<00:49,  1.91s/it] 22%|██▏       | 7/32 [00:13<00:50,  2.01s/it] 25%|██▌       | 8/32 [00:14<00:42,  1.79s/it] 28%|██▊       | 9/32 [00:16<00:46,  2.02s/it] 31%|███▏      | 10/32 [00:19<00:45,  2.08s/it] 34%|███▍      | 11/32 [00:21<00:42,  2.02s/it] 38%|███▊      | 12/32 [00:22<00:40,  2.01s/it] 41%|████      | 13/32 [00:24<00:34,  1.81s/it]��█████| 2/2 [00:03<00:00,  1.65s/it]100%|██████████| 2/2 [00:03<00:00,  1.65s/it]
+Warmup run completed.
+Starting main benchmark run...
+Traffic request rate: inf
+Burstiness factor: 1.0 (Poisson process)
+Maximum request concurrency: 1
+  0%|          | 0/32 [00:00<?, ?it/s]  3%|▎         | 1/32 [00:01<00:50,  1.63s/it]  6%|▋         | 2/32 [00:03<00:49,  1.66s/it]  9%|▉         | 3/32 [00:04<00:44,  1.54s/it] 12%|█▎        | 4/32 [00:06<00:47,  1.69s/it] 16%|█▌        | 5/32 [00:08<00:51,  1.92s/it] 19%|█▉        | 6/32 [00:10<00:49,  1.91s/it] 22%|██▏       | 7/32 [00:13<00:50,  2.01s/it] 25%|██▌       | 8/32 [00:14<00:42,  1.79s/it] 28%|██▊       | 9/32 [00:16<00:46,  2.02s/it] 31%|███▏      | 10/32 [00:19<00:45,  2.08s/it] 34%|███▍      | 11/32 [00:21<00:42,  2.02s/it] 38%|███▊      | 12/32 [00:22<00:40,  2.01s/it] 41%|████      | 13/32 [00:24<00:34,  1.81s/it] 44%|████▍     | 14/32 [00:26<00:34,  1.92s/it]��█████| 2/2 [00:03<00:00,  1.65s/it]100%|██████████| 2/2 [00:03<00:00,  1.65s/it]
+Warmup run completed.
+Starting main benchmark run...
+Traffic request rate: inf
+Burstiness factor: 1.0 (Poisson process)
+Maximum request concurrency: 1
+  0%|          | 0/32 [00:00<?, ?it/s]  3%|▎         | 1/32 [00:01<00:50,  1.63s/it]  6%|▋         | 2/32 [00:03<00:49,  1.66s/it]  9%|▉         | 3/32 [00:04<00:44,  1.54s/it] 12%|█▎        | 4/32 [00:06<00:47,  1.69s/it] 16%|█▌        | 5/32 [00:08<00:51,  1.92s/it] 19%|█▉        | 6/32 [00:10<00:49,  1.91s/it] 22%|██▏       | 7/32 [00:13<00:50,  2.01s/it] 25%|██▌       | 8/32 [00:14<00:42,  1.79s/it] 28%|██▊       | 9/32 [00:16<00:46,  2.02s/it] 31%|███▏      | 10/32 [00:19<00:45,  2.08s/it] 34%|███▍      | 11/32 [00:21<00:42,  2.02s/it] 38%|███▊      | 12/32 [00:22<00:40,  2.01s/it] 41%|████      | 13/32 [00:24<00:34,  1.81s/it] 44%|████▍     | 14/32 [00:26<00:34,  1.92s/it] 47%|████▋     | 15/32 [00:28<00:30,  1.79s/it]��█████| 2/2 [00:03<00:00,  1.65s/it]100%|██████████| 2/2 [00:03<00:00,  1.65s/it]
+Warmup run completed.
+Starting main benchmark run...
+Traffic request rate: inf
+Burstiness factor: 1.0 (Poisson process)
+Maximum request concurrency: 1
+  0%|          | 0/32 [00:00<?, ?it/s]  3%|▎         | 1/32 [00:01<00:50,  1.63s/it]  6%|▋         | 2/32 [00:03<00:49,  1.66s/it]  9%|▉         | 3/32 [00:04<00:44,  1.54s/it] 12%|█▎        | 4/32 [00:06<00:47,  1.69s/it] 16%|█▌        | 5/32 [00:08<00:51,  1.92s/it] 19%|█▉        | 6/32 [00:10<00:49,  1.91s/it] 22%|██▏       | 7/32 [00:13<00:50,  2.01s/it] 25%|██▌       | 8/32 [00:14<00:42,  1.79s/it] 28%|██▊       | 9/32 [00:16<00:46,  2.02s/it] 31%|███▏      | 10/32 [00:19<00:45,  2.08s/it] 34%|███▍      | 11/32 [00:21<00:42,  2.02s/it] 38%|███▊      | 12/32 [00:22<00:40,  2.01s/it] 41%|████      | 13/32 [00:24<00:34,  1.81s/it] 44%|████▍     | 14/32 [00:26<00:34,  1.92s/it] 47%|████▋     | 15/32 [00:28<00:30,  1.79s/it] 50%|█████     | 16/32 [00:29<00:27,  1.73s/it]��█████| 2/2 [00:03<00:00,  1.65s/it]100%|██████████| 2/2 [00:03<00:00,  1.65s/it]
+Warmup run completed.
+Starting main benchmark run...
+Traffic request rate: inf
+Burstiness factor: 1.0 (Poisson process)
+Maximum request concurrency: 1
+  0%|          | 0/32 [00:00<?, ?it/s]  3%|▎         | 1/32 [00:01<00:50,  1.63s/it]  6%|▋         | 2/32 [00:03<00:49,  1.66s/it]  9%|▉         | 3/32 [00:04<00:44,  1.54s/it] 12%|█▎        | 4/32 [00:06<00:47,  1.69s/it] 16%|█▌        | 5/32 [00:08<00:51,  1.92s/it] 19%|█▉        | 6/32 [00:10<00:49,  1.91s/it] 22%|██▏       | 7/32 [00:13<00:50,  2.01s/it] 25%|██▌       | 8/32 [00:14<00:42,  1.79s/it] 28%|██▊       | 9/32 [00:16<00:46,  2.02s/it] 31%|███▏      | 10/32 [00:19<00:45,  2.08s/it] 34%|███▍      | 11/32 [00:21<00:42,  2.02s/it] 38%|███▊      | 12/32 [00:22<00:40,  2.01s/it] 41%|████      | 13/32 [00:24<00:34,  1.81s/it] 44%|████▍     | 14/32 [00:26<00:34,  1.92s/it] 47%|████▋     | 15/32 [00:28<00:30,  1.79s/it] 50%|█████     | 16/32 [00:29<00:27,  1.73s/it] 53%|█████▎    | 17/32 [00:32<00:29,  1.94s/it]��█████| 2/2 [00:03<00:00,  1.65s/it]100%|██████████| 2/2 [00:03<00:00,  1.65s/it]
+Warmup run completed.
+Starting main benchmark run...
+Traffic request rate: inf
+Burstiness factor: 1.0 (Poisson process)
+Maximum request concurrency: 1
+  0%|          | 0/32 [00:00<?, ?it/s]  3%|▎         | 1/32 [00:01<00:50,  1.63s/it]  6%|▋         | 2/32 [00:03<00:49,  1.66s/it]  9%|▉         | 3/32 [00:04<00:44,  1.54s/it] 12%|█▎        | 4/32 [00:06<00:47,  1.69s/it] 16%|█▌        | 5/32 [00:08<00:51,  1.92s/it] 19%|█▉        | 6/32 [00:10<00:49,  1.91s/it] 22%|██▏       | 7/32 [00:13<00:50,  2.01s/it] 25%|██▌       | 8/32 [00:14<00:42,  1.79s/it] 28%|██▊       | 9/32 [00:16<00:46,  2.02s/it] 31%|███▏      | 10/32 [00:19<00:45,  2.08s/it] 34%|███▍      | 11/32 [00:21<00:42,  2.02s/it] 38%|███▊      | 12/32 [00:22<00:40,  2.01s/it] 41%|████      | 13/32 [00:24<00:34,  1.81s/it] 44%|████▍     | 14/32 [00:26<00:34,  1.92s/it] 47%|████▋     | 15/32 [00:28<00:30,  1.79s/it] 50%|█████     | 16/32 [00:29<00:27,  1.73s/it] 53%|█████▎    | 17/32 [00:32<00:29,  1.94s/it] 56%|█████▋    | 18/32 [00:33<00:26,  1.90s/it]��█████| 2/2 [00:03<00:00,  1.65s/it]100%|██████████| 2/2 [00:03<00:00,  1.65s/it]
+Warmup run completed.
+Starting main benchmark run...
+Traffic request rate: inf
+Burstiness factor: 1.0 (Poisson process)
+Maximum request concurrency: 1
+  0%|          | 0/32 [00:00<?, ?it/s]  3%|▎         | 1/32 [00:01<00:50,  1.63s/it]  6%|▋         | 2/32 [00:03<00:49,  1.66s/it]  9%|▉         | 3/32 [00:04<00:44,  1.54s/it] 12%|█▎        | 4/32 [00:06<00:47,  1.69s/it] 16%|█▌        | 5/32 [00:08<00:51,  1.92s/it] 19%|█▉        | 6/32 [00:10<00:49,  1.91s/it] 22%|██▏       | 7/32 [00:13<00:50,  2.01s/it] 25%|██▌       | 8/32 [00:14<00:42,  1.79s/it] 28%|██▊       | 9/32 [00:16<00:46,  2.02s/it] 31%|███▏      | 10/32 [00:19<00:45,  2.08s/it] 34%|███▍      | 11/32 [00:21<00:42,  2.02s/it] 38%|███▊      | 12/32 [00:22<00:40,  2.01s/it] 41%|████      | 13/32 [00:24<00:34,  1.81s/it] 44%|████▍     | 14/32 [00:26<00:34,  1.92s/it] 47%|████▋     | 15/32 [00:28<00:30,  1.79s/it] 50%|█████     | 16/32 [00:29<00:27,  1.73s/it] 53%|█████▎    | 17/32 [00:32<00:29,  1.94s/it] 56%|█████▋    | 18/32 [00:33<00:26,  1.90s/it] 59%|█████▉    | 19/32 [00:35<00:24,  1.92s/it]��█████| 2/2 [00:03<00:00,  1.65s/it]100%|██████████| 2/2 [00:03<00:00,  1.65s/it]
+Warmup run completed.
+Starting main benchmark run...
+Traffic request rate: inf
+Burstiness factor: 1.0 (Poisson process)
+Maximum request concurrency: 1
+  0%|          | 0/32 [00:00<?, ?it/s]  3%|▎         | 1/32 [00:01<00:50,  1.63s/it]  6%|▋         | 2/32 [00:03<00:49,  1.66s/it]  9%|▉         | 3/32 [00:04<00:44,  1.54s/it] 12%|█▎        | 4/32 [00:06<00:47,  1.69s/it] 16%|█▌        | 5/32 [00:08<00:51,  1.92s/it] 19%|█▉        | 6/32 [00:10<00:49,  1.91s/it] 22%|██▏       | 7/32 [00:13<00:50,  2.01s/it] 25%|██▌       | 8/32 [00:14<00:42,  1.79s/it] 28%|██▊       | 9/32 [00:16<00:46,  2.02s/it] 31%|███▏      | 10/32 [00:19<00:45,  2.08s/it] 34%|███▍      | 11/32 [00:21<00:42,  2.02s/it] 38%|███▊      | 12/32 [00:22<00:40,  2.01s/it] 41%|████      | 13/32 [00:24<00:34,  1.81s/it] 44%|████▍     | 14/32 [00:26<00:34,  1.92s/it] 47%|████▋     | 15/32 [00:28<00:30,  1.79s/it] 50%|█████     | 16/32 [00:29<00:27,  1.73s/it] 53%|█████▎    | 17/32 [00:32<00:29,  1.94s/it] 56%|█████▋    | 18/32 [00:33<00:26,  1.90s/it] 59%|█████▉    | 19/32 [00:35<00:24,  1.92s/it] 62%|██████▎   | 20/32 [00:37<00:23,  1.92s/it]��█████| 2/2 [00:03<00:00,  1.65s/it]100%|██████████| 2/2 [00:03<00:00,  1.65s/it]
+Warmup run completed.
+Starting main benchmark run...
+Traffic request rate: inf
+Burstiness factor: 1.0 (Poisson process)
+Maximum request concurrency: 1
+  0%|          | 0/32 [00:00<?, ?it/s]  3%|▎         | 1/32 [00:01<00:50,  1.63s/it]  6%|▋         | 2/32 [00:03<00:49,  1.66s/it]  9%|▉         | 3/32 [00:04<00:44,  1.54s/it] 12%|█▎        | 4/32 [00:06<00:47,  1.69s/it] 16%|█▌        | 5/32 [00:08<00:51,  1.92s/it] 19%|█▉        | 6/32 [00:10<00:49,  1.91s/it] 22%|██▏       | 7/32 [00:13<00:50,  2.01s/it] 25%|██▌       | 8/32 [00:14<00:42,  1.79s/it] 28%|██▊       | 9/32 [00:16<00:46,  2.02s/it] 31%|███▏      | 10/32 [00:19<00:45,  2.08s/it] 34%|███▍      | 11/32 [00:21<00:42,  2.02s/it] 38%|███▊      | 12/32 [00:22<00:40,  2.01s/it] 41%|████      | 13/32 [00:24<00:34,  1.81s/it] 44%|████▍     | 14/32 [00:26<00:34,  1.92s/it] 47%|████▋     | 15/32 [00:28<00:30,  1.79s/it] 50%|█████     | 16/32 [00:29<00:27,  1.73s/it] 53%|█████▎    | 17/32 [00:32<00:29,  1.94s/it] 56%|█████▋    | 18/32 [00:33<00:26,  1.90s/it] 59%|█████▉    | 19/32 [00:35<00:24,  1.92s/it] 62%|██████▎   | 20/32 [00:37<00:23,  1.92s/it] 66%|██████▌   | 21/32 [00:39<00:19,  1.82s/it]��█████| 2/2 [00:03<00:00,  1.65s/it]100%|██████████| 2/2 [00:03<00:00,  1.65s/it]
+Warmup run completed.
+Starting main benchmark run...
+Traffic request rate: inf
+Burstiness factor: 1.0 (Poisson process)
+Maximum request concurrency: 1
+  0%|          | 0/32 [00:00<?, ?it/s]  3%|▎         | 1/32 [00:01<00:50,  1.63s/it]  6%|▋         | 2/32 [00:03<00:49,  1.66s/it]  9%|▉         | 3/32 [00:04<00:44,  1.54s/it] 12%|█▎        | 4/32 [00:06<00:47,  1.69s/it] 16%|█▌        | 5/32 [00:08<00:51,  1.92s/it] 19%|█▉        | 6/32 [00:10<00:49,  1.91s/it] 22%|██▏       | 7/32 [00:13<00:50,  2.01s/it] 25%|██▌       | 8/32 [00:14<00:42,  1.79s/it] 28%|██▊       | 9/32 [00:16<00:46,  2.02s/it] 31%|███▏      | 10/32 [00:19<00:45,  2.08s/it] 34%|███▍      | 11/32 [00:21<00:42,  2.02s/it] 38%|███▊      | 12/32 [00:22<00:40,  2.01s/it] 41%|████      | 13/32 [00:24<00:34,  1.81s/it] 44%|████▍     | 14/32 [00:26<00:34,  1.92s/it] 47%|████▋     | 15/32 [00:28<00:30,  1.79s/it] 50%|█████     | 16/32 [00:29<00:27,  1.73s/it] 53%|█████▎    | 17/32 [00:32<00:29,  1.94s/it] 56%|█████▋    | 18/32 [00:33<00:26,  1.90s/it] 59%|█████▉    | 19/32 [00:35<00:24,  1.92s/it] 62%|██████▎   | 20/32 [00:37<00:23,  1.92s/it] 66%|██████▌   | 21/32 [00:39<00:19,  1.82s/it] 69%|██████▉   | 22/32 [00:41<00:20,  2.04s/it]��█████| 2/2 [00:03<00:00,  1.65s/it]100%|██████████| 2/2 [00:03<00:00,  1.65s/it]
+Warmup run completed.
+Starting main benchmark run...
+Traffic request rate: inf
+Burstiness factor: 1.0 (Poisson process)
+Maximum request concurrency: 1
+  0%|          | 0/32 [00:00<?, ?it/s]  3%|▎         | 1/32 [00:01<00:50,  1.63s/it]  6%|▋         | 2/32 [00:03<00:49,  1.66s/it]  9%|▉         | 3/32 [00:04<00:44,  1.54s/it] 12%|█▎        | 4/32 [00:06<00:47,  1.69s/it] 16%|█▌        | 5/32 [00:08<00:51,  1.92s/it] 19%|█▉        | 6/32 [00:10<00:49,  1.91s/it] 22%|██▏       | 7/32 [00:13<00:50,  2.01s/it] 25%|██▌       | 8/32 [00:14<00:42,  1.79s/it] 28%|██▊       | 9/32 [00:16<00:46,  2.02s/it] 31%|███▏      | 10/32 [00:19<00:45,  2.08s/it] 34%|███▍      | 11/32 [00:21<00:42,  2.02s/it] 38%|███▊      | 12/32 [00:22<00:40,  2.01s/it] 41%|████      | 13/32 [00:24<00:34,  1.81s/it] 44%|████▍     | 14/32 [00:26<00:34,  1.92s/it] 47%|████▋     | 15/32 [00:28<00:30,  1.79s/it] 50%|█████     | 16/32 [00:29<00:27,  1.73s/it] 53%|█████▎    | 17/32 [00:32<00:29,  1.94s/it] 56%|█████▋    | 18/32 [00:33<00:26,  1.90s/it] 59%|█████▉    | 19/32 [00:35<00:24,  1.92s/it] 62%|██████▎   | 20/32 [00:37<00:23,  1.92s/it] 66%|██████▌   | 21/32 [00:39<00:19,  1.82s/it] 69%|██████▉   | 22/32 [00:41<00:20,  2.04s/it] 72%|███████▏  | 23/32 [00:43<00:18,  2.07s/it]��█████| 2/2 [00:03<00:00,  1.65s/it]100%|██████████| 2/2 [00:03<00:00,  1.65s/it]
+Warmup run completed.
+Starting main benchmark run...
+Traffic request rate: inf
+Burstiness factor: 1.0 (Poisson process)
+Maximum request concurrency: 1
+  0%|          | 0/32 [00:00<?, ?it/s]  3%|▎         | 1/32 [00:01<00:50,  1.63s/it]  6%|▋         | 2/32 [00:03<00:49,  1.66s/it]  9%|▉         | 3/32 [00:04<00:44,  1.54s/it] 12%|█▎        | 4/32 [00:06<00:47,  1.69s/it] 16%|█▌        | 5/32 [00:08<00:51,  1.92s/it] 19%|█▉        | 6/32 [00:10<00:49,  1.91s/it] 22%|██▏       | 7/32 [00:13<00:50,  2.01s/it] 25%|██▌       | 8/32 [00:14<00:42,  1.79s/it] 28%|██▊       | 9/32 [00:16<00:46,  2.02s/it] 31%|███▏      | 10/32 [00:19<00:45,  2.08s/it] 34%|███▍      | 11/32 [00:21<00:42,  2.02s/it] 38%|███▊      | 12/32 [00:22<00:40,  2.01s/it] 41%|████      | 13/32 [00:24<00:34,  1.81s/it] 44%|████▍     | 14/32 [00:26<00:34,  1.92s/it] 47%|████▋     | 15/32 [00:28<00:30,  1.79s/it] 50%|█████     | 16/32 [00:29<00:27,  1.73s/it] 53%|█████▎    | 17/32 [00:32<00:29,  1.94s/it] 56%|█████▋    | 18/32 [00:33<00:26,  1.90s/it] 59%|█████▉    | 19/32 [00:35<00:24,  1.92s/it] 62%|██████▎   | 20/32 [00:37<00:23,  1.92s/it] 66%|██████▌   | 21/32 [00:39<00:19,  1.82s/it] 69%|██████▉   | 22/32 [00:41<00:20,  2.04s/it] 72%|███████▏  | 23/32 [00:43<00:18,  2.07s/it] 75%|███████▌  | 24/32 [00:45<00:16,  2.02s/it]��█████| 2/2 [00:03<00:00,  1.65s/it]100%|██████████| 2/2 [00:03<00:00,  1.65s/it]
+Warmup run completed.
+Starting main benchmark run...
+Traffic request rate: inf
+Burstiness factor: 1.0 (Poisson process)
+Maximum request concurrency: 1
+  0%|          | 0/32 [00:00<?, ?it/s]  3%|▎         | 1/32 [00:01<00:50,  1.63s/it]  6%|▋         | 2/32 [00:03<00:49,  1.66s/it]  9%|▉         | 3/32 [00:04<00:44,  1.54s/it] 12%|█▎        | 4/32 [00:06<00:47,  1.69s/it] 16%|█▌        | 5/32 [00:08<00:51,  1.92s/it] 19%|█▉        | 6/32 [00:10<00:49,  1.91s/it] 22%|██▏       | 7/32 [00:13<00:50,  2.01s/it] 25%|██▌       | 8/32 [00:14<00:42,  1.79s/it] 28%|██▊       | 9/32 [00:16<00:46,  2.02s/it] 31%|███▏      | 10/32 [00:19<00:45,  2.08s/it] 34%|███▍      | 11/32 [00:21<00:42,  2.02s/it] 38%|███▊      | 12/32 [00:22<00:40,  2.01s/it] 41%|████      | 13/32 [00:24<00:34,  1.81s/it] 44%|████▍     | 14/32 [00:26<00:34,  1.92s/it] 47%|████▋     | 15/32 [00:28<00:30,  1.79s/it] 50%|█████     | 16/32 [00:29<00:27,  1.73s/it] 53%|█████▎    | 17/32 [00:32<00:29,  1.94s/it] 56%|█████▋    | 18/32 [00:33<00:26,  1.90s/it] 59%|█████▉    | 19/32 [00:35<00:24,  1.92s/it] 62%|██████▎   | 20/32 [00:37<00:23,  1.92s/it] 66%|██████▌   | 21/32 [00:39<00:19,  1.82s/it] 69%|██████▉   | 22/32 [00:41<00:20,  2.04s/it] 72%|███████▏  | 23/32 [00:43<00:18,  2.07s/it] 75%|███████▌  | 24/32 [00:45<00:16,  2.02s/it] 78%|███████▊  | 25/32 [00:48<00:14,  2.09s/it]��█████| 2/2 [00:03<00:00,  1.65s/it]100%|██████████| 2/2 [00:03<00:00,  1.65s/it]
+Warmup run completed.
+Starting main benchmark run...
+Traffic request rate: inf
+Burstiness factor: 1.0 (Poisson process)
+Maximum request concurrency: 1
+  0%|          | 0/32 [00:00<?, ?it/s]  3%|▎         | 1/32 [00:01<00:50,  1.63s/it]  6%|▋         | 2/32 [00:03<00:49,  1.66s/it]  9%|▉         | 3/32 [00:04<00:44,  1.54s/it] 12%|█▎        | 4/32 [00:06<00:47,  1.69s/it] 16%|█▌        | 5/32 [00:08<00:51,  1.92s/it] 19%|█▉        | 6/32 [00:10<00:49,  1.91s/it] 22%|██▏       | 7/32 [00:13<00:50,  2.01s/it] 25%|██▌       | 8/32 [00:14<00:42,  1.79s/it] 28%|██▊       | 9/32 [00:16<00:46,  2.02s/it] 31%|███▏      | 10/32 [00:19<00:45,  2.08s/it] 34%|███▍      | 11/32 [00:21<00:42,  2.02s/it] 38%|███▊      | 12/32 [00:22<00:40,  2.01s/it] 41%|████      | 13/32 [00:24<00:34,  1.81s/it] 44%|████▍     | 14/32 [00:26<00:34,  1.92s/it] 47%|████▋     | 15/32 [00:28<00:30,  1.79s/it] 50%|█████     | 16/32 [00:29<00:27,  1.73s/it] 53%|█████▎    | 17/32 [00:32<00:29,  1.94s/it] 56%|█████▋    | 18/32 [00:33<00:26,  1.90s/it] 59%|█████▉    | 19/32 [00:35<00:24,  1.92s/it] 62%|██████▎   | 20/32 [00:37<00:23,  1.92s/it] 66%|██████▌   | 21/32 [00:39<00:19,  1.82s/it] 69%|██████▉   | 22/32 [00:41<00:20,  2.04s/it] 72%|███████▏  | 23/32 [00:43<00:18,  2.07s/it] 75%|███████▌  | 24/32 [00:45<00:16,  2.02s/it] 78%|███████▊  | 25/32 [00:48<00:14,  2.09s/it] 81%|████████▏ | 26/32 [00:50<00:12,  2.11s/it]��█████| 2/2 [00:03<00:00,  1.65s/it]100%|██████████| 2/2 [00:03<00:00,  1.65s/it]
+Warmup run completed.
+Starting main benchmark run...
+Traffic request rate: inf
+Burstiness factor: 1.0 (Poisson process)
+Maximum request concurrency: 1
+  0%|          | 0/32 [00:00<?, ?it/s]  3%|▎         | 1/32 [00:01<00:50,  1.63s/it]  6%|▋         | 2/32 [00:03<00:49,  1.66s/it]  9%|▉         | 3/32 [00:04<00:44,  1.54s/it] 12%|█▎        | 4/32 [00:06<00:47,  1.69s/it] 16%|█▌        | 5/32 [00:08<00:51,  1.92s/it] 19%|█▉        | 6/32 [00:10<00:49,  1.91s/it] 22%|██▏       | 7/32 [00:13<00:50,  2.01s/it] 25%|██▌       | 8/32 [00:14<00:42,  1.79s/it] 28%|██▊       | 9/32 [00:16<00:46,  2.02s/it] 31%|███▏      | 10/32 [00:19<00:45,  2.08s/it] 34%|███▍      | 11/32 [00:21<00:42,  2.02s/it] 38%|███▊      | 12/32 [00:22<00:40,  2.01s/it] 41%|████      | 13/32 [00:24<00:34,  1.81s/it] 44%|████▍     | 14/32 [00:26<00:34,  1.92s/it] 47%|████▋     | 15/32 [00:28<00:30,  1.79s/it] 50%|█████     | 16/32 [00:29<00:27,  1.73s/it] 53%|█████▎    | 17/32 [00:32<00:29,  1.94s/it] 56%|█████▋    | 18/32 [00:33<00:26,  1.90s/it] 59%|█████▉    | 19/32 [00:35<00:24,  1.92s/it] 62%|██████▎   | 20/32 [00:37<00:23,  1.92s/it] 66%|██████▌   | 21/32 [00:39<00:19,  1.82s/it] 69%|██████▉   | 22/32 [00:41<00:20,  2.04s/it] 72%|███████▏  | 23/32 [00:43<00:18,  2.07s/it] 75%|███████▌  | 24/32 [00:45<00:16,  2.02s/it] 78%|███████▊  | 25/32 [00:48<00:14,  2.09s/it] 81%|████████▏ | 26/32 [00:50<00:12,  2.11s/it] 84%|████████▍ | 27/32 [00:52<00:10,  2.13s/it]��█████| 2/2 [00:03<00:00,  1.65s/it]100%|██████████| 2/2 [00:03<00:00,  1.65s/it]
+Warmup run completed.
+Starting main benchmark run...
+Traffic request rate: inf
+Burstiness factor: 1.0 (Poisson process)
+Maximum request concurrency: 1
+  0%|          | 0/32 [00:00<?, ?it/s]  3%|▎         | 1/32 [00:01<00:50,  1.63s/it]  6%|▋         | 2/32 [00:03<00:49,  1.66s/it]  9%|▉         | 3/32 [00:04<00:44,  1.54s/it] 12%|█▎        | 4/32 [00:06<00:47,  1.69s/it] 16%|█▌        | 5/32 [00:08<00:51,  1.92s/it] 19%|█▉        | 6/32 [00:10<00:49,  1.91s/it] 22%|██▏       | 7/32 [00:13<00:50,  2.01s/it] 25%|██▌       | 8/32 [00:14<00:42,  1.79s/it] 28%|██▊       | 9/32 [00:16<00:46,  2.02s/it] 31%|███▏      | 10/32 [00:19<00:45,  2.08s/it] 34%|███▍      | 11/32 [00:21<00:42,  2.02s/it] 38%|███▊      | 12/32 [00:22<00:40,  2.01s/it] 41%|████      | 13/32 [00:24<00:34,  1.81s/it] 44%|████▍     | 14/32 [00:26<00:34,  1.92s/it] 47%|████▋     | 15/32 [00:28<00:30,  1.79s/it] 50%|█████     | 16/32 [00:29<00:27,  1.73s/it] 53%|█████▎    | 17/32 [00:32<00:29,  1.94s/it] 56%|█████▋    | 18/32 [00:33<00:26,  1.90s/it] 59%|█████▉    | 19/32 [00:35<00:24,  1.92s/it] 62%|██████▎   | 20/32 [00:37<00:23,  1.92s/it] 66%|██████▌   | 21/32 [00:39<00:19,  1.82s/it] 69%|██████▉   | 22/32 [00:41<00:20,  2.04s/it] 72%|███████▏  | 23/32 [00:43<00:18,  2.07s/it] 75%|███████▌  | 24/32 [00:45<00:16,  2.02s/it] 78%|███████▊  | 25/32 [00:48<00:14,  2.09s/it] 81%|████████▏ | 26/32 [00:50<00:12,  2.11s/it] 84%|████████▍ | 27/32 [00:52<00:10,  2.13s/it] 88%|████████▊ | 28/32 [00:53<00:07,  1.91s/it]��█████| 2/2 [00:03<00:00,  1.65s/it]100%|██████████| 2/2 [00:03<00:00,  1.65s/it]
+Warmup run completed.
+Starting main benchmark run...
+Traffic request rate: inf
+Burstiness factor: 1.0 (Poisson process)
+Maximum request concurrency: 1
+  0%|          | 0/32 [00:00<?, ?it/s]  3%|▎         | 1/32 [00:01<00:50,  1.63s/it]  6%|▋         | 2/32 [00:03<00:49,  1.66s/it]  9%|▉         | 3/32 [00:04<00:44,  1.54s/it] 12%|█▎        | 4/32 [00:06<00:47,  1.69s/it] 16%|█▌        | 5/32 [00:08<00:51,  1.92s/it] 19%|█▉        | 6/32 [00:10<00:49,  1.91s/it] 22%|██▏       | 7/32 [00:13<00:50,  2.01s/it] 25%|██▌       | 8/32 [00:14<00:42,  1.79s/it] 28%|██▊       | 9/32 [00:16<00:46,  2.02s/it] 31%|███▏      | 10/32 [00:19<00:45,  2.08s/it] 34%|███▍      | 11/32 [00:21<00:42,  2.02s/it] 38%|███▊      | 12/32 [00:22<00:40,  2.01s/it] 41%|████      | 13/32 [00:24<00:34,  1.81s/it] 44%|████▍     | 14/32 [00:26<00:34,  1.92s/it] 47%|████▋     | 15/32 [00:28<00:30,  1.79s/it] 50%|█████     | 16/32 [00:29<00:27,  1.73s/it] 53%|█████▎    | 17/32 [00:32<00:29,  1.94s/it] 56%|█████▋    | 18/32 [00:33<00:26,  1.90s/it] 59%|█████▉    | 19/32 [00:35<00:24,  1.92s/it] 62%|██████▎   | 20/32 [00:37<00:23,  1.92s/it] 66%|██████▌   | 21/32 [00:39<00:19,  1.82s/it] 69%|██████▉   | 22/32 [00:41<00:20,  2.04s/it] 72%|███████▏  | 23/32 [00:43<00:18,  2.07s/it] 75%|███████▌  | 24/32 [00:45<00:16,  2.02s/it] 78%|███████▊  | 25/32 [00:48<00:14,  2.09s/it] 81%|████████▏ | 26/32 [00:50<00:12,  2.11s/it] 84%|████████▍ | 27/32 [00:52<00:10,  2.13s/it] 88%|████████▊ | 28/32 [00:53<00:07,  1.91s/it] 91%|█████████ | 29/32 [00:56<00:06,  2.04s/it]��█████| 2/2 [00:03<00:00,  1.65s/it]100%|██████████| 2/2 [00:03<00:00,  1.65s/it]
+Warmup run completed.
+Starting main benchmark run...
+Traffic request rate: inf
+Burstiness factor: 1.0 (Poisson process)
+Maximum request concurrency: 1
+  0%|          | 0/32 [00:00<?, ?it/s]  3%|▎         | 1/32 [00:01<00:50,  1.63s/it]  6%|▋         | 2/32 [00:03<00:49,  1.66s/it]  9%|▉         | 3/32 [00:04<00:44,  1.54s/it] 12%|█▎        | 4/32 [00:06<00:47,  1.69s/it] 16%|█▌        | 5/32 [00:08<00:51,  1.92s/it] 19%|█▉        | 6/32 [00:10<00:49,  1.91s/it] 22%|██▏       | 7/32 [00:13<00:50,  2.01s/it] 25%|██▌       | 8/32 [00:14<00:42,  1.79s/it] 28%|██▊       | 9/32 [00:16<00:46,  2.02s/it] 31%|███▏      | 10/32 [00:19<00:45,  2.08s/it] 34%|███▍      | 11/32 [00:21<00:42,  2.02s/it] 38%|███▊      | 12/32 [00:22<00:40,  2.01s/it] 41%|████      | 13/32 [00:24<00:34,  1.81s/it] 44%|████▍     | 14/32 [00:26<00:34,  1.92s/it] 47%|████▋     | 15/32 [00:28<00:30,  1.79s/it] 50%|█████     | 16/32 [00:29<00:27,  1.73s/it] 53%|█████▎    | 17/32 [00:32<00:29,  1.94s/it] 56%|█████▋    | 18/32 [00:33<00:26,  1.90s/it] 59%|█████▉    | 19/32 [00:35<00:24,  1.92s/it] 62%|██████▎   | 20/32 [00:37<00:23,  1.92s/it] 66%|██████▌   | 21/32 [00:39<00:19,  1.82s/it] 69%|██████▉   | 22/32 [00:41<00:20,  2.04s/it] 72%|███████▏  | 23/32 [00:43<00:18,  2.07s/it] 75%|███████▌  | 24/32 [00:45<00:16,  2.02s/it] 78%|███████▊  | 25/32 [00:48<00:14,  2.09s/it] 81%|████████▏ | 26/32 [00:50<00:12,  2.11s/it] 84%|████████▍ | 27/32 [00:52<00:10,  2.13s/it] 88%|████████▊ | 28/32 [00:53<00:07,  1.91s/it] 91%|█████████ | 29/32 [00:56<00:06,  2.04s/it] 94%|█████████▍| 30/32 [00:58<00:04,  2.15s/it]��█████| 2/2 [00:03<00:00,  1.65s/it]100%|██████████| 2/2 [00:03<00:00,  1.65s/it]
+Warmup run completed.
+Starting main benchmark run...
+Traffic request rate: inf
+Burstiness factor: 1.0 (Poisson process)
+Maximum request concurrency: 1
+  0%|          | 0/32 [00:00<?, ?it/s]  3%|▎         | 1/32 [00:01<00:50,  1.63s/it]  6%|▋         | 2/32 [00:03<00:49,  1.66s/it]  9%|▉         | 3/32 [00:04<00:44,  1.54s/it] 12%|█▎        | 4/32 [00:06<00:47,  1.69s/it] 16%|█▌        | 5/32 [00:08<00:51,  1.92s/it] 19%|█▉        | 6/32 [00:10<00:49,  1.91s/it] 22%|██▏       | 7/32 [00:13<00:50,  2.01s/it] 25%|██▌       | 8/32 [00:14<00:42,  1.79s/it] 28%|██▊       | 9/32 [00:16<00:46,  2.02s/it] 31%|███▏      | 10/32 [00:19<00:45,  2.08s/it] 34%|███▍      | 11/32 [00:21<00:42,  2.02s/it] 38%|███▊      | 12/32 [00:22<00:40,  2.01s/it] 41%|████      | 13/32 [00:24<00:34,  1.81s/it] 44%|████▍     | 14/32 [00:26<00:34,  1.92s/it] 47%|████▋     | 15/32 [00:28<00:30,  1.79s/it] 50%|█████     | 16/32 [00:29<00:27,  1.73s/it] 53%|█████▎    | 17/32 [00:32<00:29,  1.94s/it] 56%|█████▋    | 18/32 [00:33<00:26,  1.90s/it] 59%|█████▉    | 19/32 [00:35<00:24,  1.92s/it] 62%|██████▎   | 20/32 [00:37<00:23,  1.92s/it] 66%|██████▌   | 21/32 [00:39<00:19,  1.82s/it] 69%|██████▉   | 22/32 [00:41<00:20,  2.04s/it] 72%|███████▏  | 23/32 [00:43<00:18,  2.07s/it] 75%|███████▌  | 24/32 [00:45<00:16,  2.02s/it] 78%|███████▊  | 25/32 [00:48<00:14,  2.09s/it] 81%|████████▏ | 26/32 [00:50<00:12,  2.11s/it] 84%|████████▍ | 27/32 [00:52<00:10,  2.13s/it] 88%|████████▊ | 28/32 [00:53<00:07,  1.91s/it] 91%|█████████ | 29/32 [00:56<00:06,  2.04s/it] 94%|█████████▍| 30/32 [00:58<00:04,  2.15s/it] 97%|█████████▋| 31/32 [01:00<00:02,  2.06s/it]��█████| 2/2 [00:03<00:00,  1.65s/it]100%|██████████| 2/2 [00:03<00:00,  1.65s/it]
+Warmup run completed.
+Starting main benchmark run...
+Traffic request rate: inf
+Burstiness factor: 1.0 (Poisson process)
+Maximum request concurrency: 1
+  0%|          | 0/32 [00:00<?, ?it/s]  3%|▎         | 1/32 [00:01<00:50,  1.63s/it]  6%|▋         | 2/32 [00:03<00:49,  1.66s/it]  9%|▉         | 3/32 [00:04<00:44,  1.54s/it] 12%|█▎        | 4/32 [00:06<00:47,  1.69s/it] 16%|█▌        | 5/32 [00:08<00:51,  1.92s/it] 19%|█▉        | 6/32 [00:10<00:49,  1.91s/it] 22%|██▏       | 7/32 [00:13<00:50,  2.01s/it] 25%|██▌       | 8/32 [00:14<00:42,  1.79s/it] 28%|██▊       | 9/32 [00:16<00:46,  2.02s/it] 31%|███▏      | 10/32 [00:19<00:45,  2.08s/it] 34%|███▍      | 11/32 [00:21<00:42,  2.02s/it] 38%|███▊      | 12/32 [00:22<00:40,  2.01s/it] 41%|████      | 13/32 [00:24<00:34,  1.81s/it] 44%|████▍     | 14/32 [00:26<00:34,  1.92s/it] 47%|████▋     | 15/32 [00:28<00:30,  1.79s/it] 50%|█████     | 16/32 [00:29<00:27,  1.73s/it] 53%|█████▎    | 17/32 [00:32<00:29,  1.94s/it] 56%|█████▋    | 18/32 [00:33<00:26,  1.90s/it] 59%|█████▉    | 19/32 [00:35<00:24,  1.92s/it] 62%|██████▎   | 20/32 [00:37<00:23,  1.92s/it] 66%|██████▌   | 21/32 [00:39<00:19,  1.82s/it] 69%|██████▉   | 22/32 [00:41<00:20,  2.04s/it] 72%|███████▏  | 23/32 [00:43<00:18,  2.07s/it] 75%|███████▌  | 24/32 [00:45<00:16,  2.02s/it] 78%|███████▊  | 25/32 [00:48<00:14,  2.09s/it] 81%|████████▏ | 26/32 [00:50<00:12,  2.11s/it] 84%|████████▍ | 27/32 [00:52<00:10,  2.13s/it] 88%|████████▊ | 28/32 [00:53<00:07,  1.91s/it] 91%|█████████ | 29/32 [00:56<00:06,  2.04s/it] 94%|█████████▍| 30/32 [00:58<00:04,  2.15s/it] 97%|█████████▋| 31/32 [01:00<00:02,  2.06s/it]100%|██████████| 32/32 [01:02<00:00,  2.09s/it]100%|██████████| 32/32 [01:02<00:00,  1.96s/it]
+��█████| 2/2 [00:03<00:00,  1.65s/it]100%|██████████| 2/2 [00:03<00:00,  1.65s/it]
+Warmup run completed.
+Starting main benchmark run...
+Traffic request rate: inf
+Burstiness factor: 1.0 (Poisson process)
+Maximum request concurrency: 1
+  0%|          | 0/32 [00:00<?, ?it/s]  3%|▎         | 1/32 [00:01<00:50,  1.63s/it]  6%|▋         | 2/32 [00:03<00:49,  1.66s/it]  9%|▉         | 3/32 [00:04<00:44,  1.54s/it] 12%|█▎        | 4/32 [00:06<00:47,  1.69s/it] 16%|█▌        | 5/32 [00:08<00:51,  1.92s/it] 19%|█▉        | 6/32 [00:10<00:49,  1.91s/it] 22%|██▏       | 7/32 [00:13<00:50,  2.01s/it] 25%|██▌       | 8/32 [00:14<00:42,  1.79s/it] 28%|██▊       | 9/32 [00:16<00:46,  2.02s/it] 31%|███▏      | 10/32 [00:19<00:45,  2.08s/it] 34%|███▍      | 11/32 [00:21<00:42,  2.02s/it] 38%|███▊      | 12/32 [00:22<00:40,  2.01s/it] 41%|████      | 13/32 [00:24<00:34,  1.81s/it] 44%|████▍     | 14/32 [00:26<00:34,  1.92s/it] 47%|████▋     | 15/32 [00:28<00:30,  1.79s/it] 50%|█████     | 16/32 [00:29<00:27,  1.73s/it] 53%|█████▎    | 17/32 [00:32<00:29,  1.94s/it] 56%|█████▋    | 18/32 [00:33<00:26,  1.90s/it] 59%|█████▉    | 19/32 [00:35<00:24,  1.92s/it] 62%|██████▎   | 20/32 [00:37<00:23,  1.92s/it] 66%|██████▌   | 21/32 [00:39<00:19,  1.82s/it] 69%|██████▉   | 22/32 [00:41<00:20,  2.04s/it] 72%|███████▏  | 23/32 [00:43<00:18,  2.07s/it] 75%|███████▌  | 24/32 [00:45<00:16,  2.02s/it] 78%|███████▊  | 25/32 [00:48<00:14,  2.09s/it] 81%|████████▏ | 26/32 [00:50<00:12,  2.11s/it] 84%|████████▍ | 27/32 [00:52<00:10,  2.13s/it] 88%|████████▊ | 28/32 [00:53<00:07,  1.91s/it] 91%|█████████ | 29/32 [00:56<00:06,  2.04s/it] 94%|█████████▍| 30/32 [00:58<00:04,  2.15s/it] 97%|█████████▋| 31/32 [01:00<00:02,  2.06s/it]100%|██████████| 32/32 [01:02<00:00,  2.09s/it]100%|██████████| 32/32 [01:02<00:00,  1.96s/it]
+tip: install termplotlib and gnuplot to plot the metrics
+============ Serving Benchmark Result ============
+Successful requests:                     32        
+Failed requests:                         0         
+Maximum request concurrency:             1         
+Benchmark duration (s):                  62.64     
+Request throughput (req/s):              0.51      
+Peak concurrent requests:                2.00      
+----------------End-to-end Latency----------------
+Mean E2EL (ms):                          1957.01   
+Median E2EL (ms):                        1941.93   
+P99 E2EL (ms):                           2552.58   
+================== Text Result ===================
+Total input tokens:                      4801      
+Total generated tokens:                  481       
+Output token throughput (tok/s):         7.68      
+Peak output token throughput (tok/s):    23.00     
+Peak concurrent requests:                2.00      
+Total Token throughput (tok/s):          84.33     
+---------------Time to First Token----------------
+Mean TTFT (ms):                          311.34    
+Median TTFT (ms):                        310.77    
+P99 TTFT (ms):                           448.14    
+================== Audio Result ==================
+Total audio duration generated(s):       139.00    
+Total audio frames generated:            3336000   
+Audio throughput(audio duration/s):      2.22      
+Streaming continuity OK rate:            100.00%   
+---------------Time to First Packet---------------
+Mean AUDIO_TTFP (ms):                    1005.39   
+Median AUDIO_TTFP (ms):                  1005.40   
+P99 AUDIO_TTFP (ms):                     1143.73   
+-----------------Real Time Factor-----------------
+Mean AUDIO_RTF:                          0.46      
+Median AUDIO_RTF:                        0.46      
+P99 AUDIO_RTF:                           0.64      
+------------------Audio Duration------------------
+Mean AUDIO_DURATION (s):                 4.34      
+Median AUDIO_DURATION (s):               4.40      
+P99 AUDIO_DURATION (s):                  6.20      
+==================================================
