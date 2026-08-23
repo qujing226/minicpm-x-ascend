@@ -1,0 +1,581 @@
+> 这不是 WAV 文件写到一半打不开，而是 Talker 在“语音还没说完”时先耗尽了 codec token 预算，被系统强制停止；Code2Wav 只能把这段不完整的 codec 序列还原成不完整音频。
+
+## 1. 文本是怎样变成音频的
+
+MiniCPM-o 4.5 的语音输出路径可以简化为：
+
+```text
+Thinker 生成文本
+        │
+        ▼
+文本 token + hidden states
+        │
+        ▼
+Talker 自回归生成 codec token
+c₁ → c₂ → c₃ → ... → EOS
+        │
+        ▼
+Code2Wav 将 codec token 转成 24 kHz PCM
+        │
+        ▼
+客户端收到音频
+```
+
+这里有三种完全不同的“长度”：
+
+| 概念 | 示例 | 含义 |
+|---|---|---|
+| 汉字数 | “自动驾驶……”有十几个汉字 | 人看到的文本长度 |
+| Text token 数 | 可能只有 8 个 | Thinker/Talker 使用的离散文本单元 |
+| Codec token 数 | 可能需要 80～100 多个 | Talker 生成的声学时间序列 |
+
+最关键的一点是：
+
+```text
+1 个 text token ≠ 固定对应 10 个 codec token
+```
+
+Text token 描述语言内容；codec token 描述随时间展开的声学信息。一个词要说多久，还受语速、停顿、标点、韵律、说话人风格等影响。
+
+## 2. `×10` 到底是什么
+
+当前比赛分支中的代码是：
+
+```python
+_MIN_AUDIO_TOKENS = 64
+_MAX_AUDIO_TOKENS = 2048
+_AUDIO_TOKENS_PER_TEXT_TOKEN = 10
+```
+
+预算函数：
+
+```python
+max_audio_tokens = max(
+    64,
+    min(2048, condition_tokens * 10),
+)
+```
+
+对应源码：[minicpmo_4_5_omni_tts.py](/workspace/vllm-omni/vllm_omni/model_executor/models/minicpmo_4_5/minicpmo_4_5_omni_tts.py:35)。
+
+假设 Talker 收到 `N` 个条件 token，那么允许生成的最大 codec token 数为：
+
+\[
+B(N)=\max(64,\min(2048,10N))
+\]
+
+例如：
+
+```text
+N = 7   → budget = 70
+N = 8   → budget = 80
+N = 15  → budget = 150
+N = 30  → budget = 300
+```
+
+这个 `10` 不是模型参数，也不是声学定律，而是 vLLM-Omni 为了限制生成量加入的工程估算。
+
+它的目的原本是合理的：
+
+- 防止 Talker 不生成 EOS 而无限循环；
+- 防止异常请求占用大量计算；
+- 限制 KV Cache 和上下文长度；
+- 避免无意义的重复音频；
+- 控制时延和显存。
+
+问题是：这个估算有时太紧。
+
+## 3. Talker 正常应该怎样结束
+
+Talker 是一个自回归模型，每一步预测一个 codec token：
+
+```text
+step 0 → codec₀
+step 1 → codec₁
+step 2 → codec₂
+...
+```
+
+codec 词表中有一个特殊的 EOS：
+
+```text
+EOS = 语音自然结束
+```
+
+正常路径应该是：
+
+```text
+生成完整句子
+→ 预测 EOS
+→ Talker 结束
+→ Code2Wav 刷新最后一个音频 chunk
+```
+
+但系统还设置了一个硬上限：
+
+```python
+reached_limit = state["step"] >= state["max_tokens"]
+finished = is_eos or reached_limit
+```
+
+因此实际存在两种结束方式：
+
+```text
+自然结束：
+is_eos = True
+reached_limit = False
+
+强制结束：
+is_eos = False
+reached_limit = True
+```
+
+第二种就是问题所在。
+
+## 4. 为什么会少掉句尾
+
+假设一段文本有 8 个条件 token：
+
+```text
+condition_tokens = 8
+budget = 8 × 10 = 80
+```
+
+但模型完整朗读这句话实际需要：
+
+```text
+95 个 codec token
+```
+
+理想序列是：
+
+```text
+codec₁ ... codec₉₅ → EOS
+```
+
+系统却只允许到 80：
+
+```text
+codec₁ ... codec₈₀ → reached_limit
+```
+
+于是 Talker 在还没有生成 EOS 时被强制结束：
+
+```text
+完整语音：
+“自动驾驶将大幅提升出行安全，效率。”
+
+被截断：
+“自动驾驶将大幅提升出行安全……”
+```
+
+Code2Wav 本身并不知道文本还没说完。它看到的只是：
+
+```text
+这里有 80 个 codec token，请转换成波形。
+```
+
+所以它会忠实地输出这 80 个 token 对应的声音，然后结束。
+
+这就是为什么：
+
+- HTTP 请求成功；
+- 没有服务异常；
+- PCM 可以正常解码；
+- 音频格式完全正确；
+- 但最后几个字没有声音。
+
+这是语义上的截断，不是文件损坏。
+
+## 5. `min_tokens=50` 为什么会让短句也容易中招
+
+当前 Talker 还有一个最小生成长度：
+
+```python
+_CODEC_MIN_TOKENS = 50
+```
+
+在前 50 步中，EOS 会被强制屏蔽：
+
+```python
+if step < min_tokens:
+    logits[..., eos_id] = -inf
+```
+
+也就是说：
+
+```text
+step 0～49：
+模型不允许选择 EOS
+
+step 50 以后：
+模型才允许自然结束
+```
+
+现在看一个 7-token 句子：
+
+```text
+最大预算：70
+EOS 解禁：50
+```
+
+模型真正能够自然结束的窗口只有大约：
+
+```text
+50～69，共约 20 步
+```
+
+如果完整朗读需要 75 个 codec token，那么它根本没有机会生成正确 EOS：
+
+```text
+前 50 步：不允许 EOS
+第 50～69 步：还没说完
+第 70 步：触发硬上限
+```
+
+这解释了为什么你的问题反而集中在 tokenizer 计数为 7～10 的句子，而不只是所谓“长文本”。
+
+`64` 的最小预算减轻了一部分问题，但仍不能保证足够。
+
+## 6. 为什么汉字不少，text token 却很少
+
+MiniCPM 使用的 tokenizer 不是简单的“一字一 token”。
+
+例如某些常见词组可能被编码成一个或少量 token：
+
+```text
+“互联网”
+“自动驾驶”
+“可持续发展”
+```
+
+因此：
+
+```text
+十几个甚至二十几个汉字
+→ 可能只有 7～10 个模型 token
+```
+
+但是说出这些汉字所需的音频时长不会因此按比例下降。
+
+这产生了根本的不匹配：
+
+```text
+预算依据：文本 tokenizer 压缩后的 token 数
+真实需求：语音实际持续时间和韵律
+```
+
+因此 `text_tokens × 10` 只能是粗略估算。
+
+## 7. 你的 WER 为什么会升到 5.54%
+
+中文 Seed-TTS 的流程是：
+
+```text
+生成音频
+→ Paraformer 转写
+→ 删除标点
+→ 中文按单字加空格
+→ jiwer 计算错误率
+```
+
+源码：[seed_tts_eval.py](/workspace/vllm-omni/vllm_omni/benchmarks/data_modules/seed_tts_eval.py:154)。
+
+WER 公式为：
+
+\[
+WER=\frac{S+D+I}{N}
+\]
+
+其中：
+
+- `S`：替换；
+- `D`：删除；
+- `I`：插入；
+- `N`：参考文本长度。
+
+尾部截断主要产生删除错误。
+
+例如：
+
+```text
+参考：
+互 联 网 已 经 成 为 一 种 解 决 方 案 的 应 用 层
+
+ASR：
+互 联 网 已 经 成 为 一 种 解 决 方 案
+```
+
+最后的：
+
+```text
+的 应 用 层
+```
+
+全部被记为删除。
+
+在你的 32 条结果中：
+
+```text
+15 条 WER 非零
+其中 11 条是“ASR 为参考文本严格前缀”
+这些尾部缺失贡献了总 WER 的 89.6%
+```
+
+因此这不是少数 ASR 同音字造成的随机波动，而是非常明显的系统性尾部丢失模式。
+
+另外：
+
+```text
+WER = 0.0554
+```
+
+表示的是：
+
+```text
+5.54%
+```
+
+而不是 `0.0554%`。
+
+## 8. 为什么改成 ×15 可能解决问题
+
+把倍率改为 15 后：
+
+\[
+B(N)=\max(64,\min(2048,15N))
+\]
+
+例如 PR #6215 的复现：
+
+```text
+文本条件 token：15
+完整语音需求：约 169 codec token
+```
+
+使用 ×10：
+
+```text
+预算 = 150
+150 < 169
+→ 被硬截断
+```
+
+使用 ×15：
+
+```text
+预算 = 225
+169 < 225
+→ 模型有机会在第 169 步自然产生 EOS
+```
+
+所以音频能够完整说出最后的“都市”。
+
+但这里要理解：
+
+> ×15 并不是要求模型必须生成 225 个 token，只是允许最多生成 225 个。
+
+如果模型在 169 步生成 EOS，它仍然会在 169 步结束：
+
+```text
+×10：150 步被迫结束
+×15：169 步自然结束
+```
+
+因此，对原本就在 ×10 预算内产生 EOS 的请求，理论上完全没有影响。
+
+## 9. 为什么 ×15 有时又会出现重复或乱码
+
+如果模型本身没有稳定地产生 EOS，那么增加预算会让它继续生成。
+
+例如：
+
+```text
+×10：
+正常内容 ... 第 300 步
+第 340 步硬截断
+
+×15：
+正常内容 ... 第 300 步
+第 340 步以后模型开始退化
+重复音节 → 重复词语 → 噪声
+第 510 步才硬截断
+```
+
+于是表面上看：
+
+```text
+×10：音频似乎正常
+×15：尾部重复、乱码
+```
+
+但这不一定意味着 ×10 更正确。可能只是：
+
+```text
+×10 恰好在模型退化前将输出砍掉了
+```
+
+如果采用相同输入、seed、采样参数和执行路径，那么把上限从 10 改为 15，不应该改变旧上限之前的 codec token 序列。区别只会出现在原来的截断点之后。
+
+如果 ×15 在旧截断点之前就改变了内容，则说明 A/B 中还存在其他变量，例如：
+
+- seed 不一致；
+- sampling 参数不同；
+- batching 顺序不同；
+- 代码版本不同；
+- 请求文本或模板不同。
+
+## 10. 长文本还有另一个独立问题：上下文窗口
+
+Talker 的最大上下文是：
+
+```text
+4096 positions
+```
+
+它必须同时容纳：
+
+```text
+Talker prompt/文本条件
++
+已经生成的 codec token
+```
+
+因此真正安全的音频预算应该是：
+
+\[
+audio\_budget \le 4096-prompt\_length
+\]
+
+当前比赛分支的 `×10` 逻辑主要依据文本 token 数，并没有完整表达这个约束。
+
+例如：
+
+```text
+prompt length = 2500
+codec budget = 2048
+总需求 = 4548 > 4096
+```
+
+即使预算允许生成 2048 个 codec token，Talker 的上下文也放不下。
+
+这也是上游 [PR #6346](https://github.com/vllm-project/vllm-omni/pull/6346) 没有简单采用 `×15`，而是引入“根据剩余上下文计算预算”的原因之一。
+
+所以至少要区分两种问题：
+
+```text
+短/中句：
+text_tokens × 10 估算不足，先碰到人为预算
+
+长句：
+prompt + codec 超过 Talker 的 4096 上下文
+```
+
+它们的外部症状都可能是“尾部没说完”，但根因不同。
+
+## 11. 为什么目前还不能百分之百确认根因
+
+你的结果已经证明：
+
+```text
+音频尾部确实缺失
+```
+
+当前源码也证明：
+
+```text
+×10 硬上限确实可能强制终止
+```
+
+但还没有把二者通过请求级证据连接起来。
+
+对每个失败请求，我们还不知道：
+
+```text
+condition_tokens = ?
+max_tokens = ?
+actual codec steps = ?
+is_eos = ?
+reached_limit = ?
+送入 Code2Wav 的 codec token 数 = ?
+```
+
+可能存在四种不同故障：
+
+| 终止位置 | 可能根因 |
+|---|---|
+| `reached_limit=True` | ×10 预算不足 |
+| `is_eos=True`，但过早结束 | Talker 提前预测 EOS |
+| Talker codec 完整，Code2Wav 输入缺尾部 | connector/chunk 生命周期问题 |
+| Code2Wav 输入完整，PCM 缺尾部 | vocoder 尾块刷新问题 |
+
+目前根据“严格前缀式 ASR 错误 + ×10 预算机制 + PR 复现”，第一种最可疑，但性能工程要求把 `reached_limit` 真正记录出来，才能称为根因闭环。
+
+## 12. 它对 RTF 的影响为什么不确定
+
+当前性能 Benchmark 大致计算：
+
+\[
+RTF=\frac{audio\ generation\ time}{audio\ duration}
+\]
+
+假设截断版本：
+
+```text
+生成时间：1.8 秒
+音频时长：4.0 秒
+RTF = 0.45
+```
+
+修复后多生成句尾：
+
+```text
+生成时间：2.0 秒
+音频时长：4.5 秒
+RTF = 0.44
+```
+
+虽然计算时间增加，RTF 反而可能下降，因为音频时长也增加，而且 TTFT/TTFP 等固定成本被更长音频摊薄了。
+
+也可能出现：
+
+```text
+生成时间增加很多
+音频时长只增加一点
+→ RTF 上升
+```
+
+所以：
+
+```text
+×15 是否增加 RTF
+```
+
+不能从生成 token 数直接推出，只能做匹配的 A/B 测量。
+
+它比较确定的影响是：
+
+```text
+TTFT：基本不影响
+TTFP：基本不影响
+E2EL：被截断样本会增长
+音频时长：会增长
+WER：尾部补全后应下降
+RTF：方向需要实测
+```
+
+最终应该建立的因果链是：
+
+```text
+文本被编码成 N 个条件 token
+→ ×10 得到最大预算 B
+→ Talker 在 EOS 前达到 B
+→ reached_limit 强制终止
+→ Code2Wav 只收到 codec 前缀
+→ PCM 音频缺少句尾
+→ Paraformer 转写成为参考文本前缀
+→ 删除错误增加
+→ 中文 WER 升高
+```
+
+下一步应先验证这条链中的核心一环——失败请求到底是 `is_eos` 结束还是 `reached_limit` 结束。在这个证据出来前，不应该直接把 `10` 改成 `15`。
